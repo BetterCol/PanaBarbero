@@ -17,7 +17,7 @@
     "@pbarb/typescript-config": "*",
     "typescript": "^5.8.3",
     "@types/bun": "latest",
-    "@types/react": "19.1.1",
+    "@types/react": "19.1.2",
     "@types/react-dom": "^19.1.2"
   }
 }

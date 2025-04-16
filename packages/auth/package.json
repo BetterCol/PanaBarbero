@@ -19,7 +19,7 @@
     "@clerk/types": "^4.53.0",
     "@pbarb/typescript-config": "*",
     "@types/bun": "latest",
-    "@types/react": "19.1.1",
+    "@types/react": "19.1.2",
     "@types/react-dom": "^19.1.2",
     "typescript": "^5.8.3"
   }
