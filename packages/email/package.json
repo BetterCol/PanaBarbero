@@ -1,5 +1,5 @@
 {
-  "name": "@repo/email",
+  "name": "@pbarb/email",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -15,8 +15,8 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@repo/typescript-config": "*",
-    "@types/node": "22.14.1",
+    "@pbarb/typescript-config": "*",
+    "@types/bun": "latest",
     "@types/react": "19.1.1",
     "@types/react-dom": "^19.1.2",
     "typescript": "^5.8.3"

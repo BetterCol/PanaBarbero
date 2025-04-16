@@ -11,11 +11,11 @@
     "prefix": ""
   },
   "aliases": {
-    "components": "@repo/design-system/components",
-    "utils": "@repo/design-system/lib/utils",
-    "hooks": "@repo/design-system/hooks",
-    "lib": "@repo/design-system/lib",
-    "ui": "@repo/design-system/components/ui"
+    "components": "@pbarb/design-system/components",
+    "utils": "@pbarb/design-system/lib/utils",
+    "hooks": "@pbarb/design-system/hooks",
+    "lib": "@pbarb/design-system/lib",
+    "ui": "@pbarb/design-system/components/ui"
   },
   "iconLibrary": "lucide"
 }

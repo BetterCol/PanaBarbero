@@ -1,5 +1,5 @@
 {
-  "name": "@repo/payments",
+  "name": "@pbarb/payments",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -14,7 +14,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@repo/typescript-config": "*",
+    "@pbarb/typescript-config": "*",
     "typescript": "^5.8.3"
   }
 }

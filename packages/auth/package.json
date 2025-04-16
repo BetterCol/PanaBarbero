@@ -1,5 +1,5 @@
 {
-  "name": "@repo/auth",
+  "name": "@pbarb/auth",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -17,8 +17,8 @@
   },
   "devDependencies": {
     "@clerk/types": "^4.53.0",
-    "@repo/typescript-config": "*",
-    "@types/node": "22.14.1",
+    "@pbarb/typescript-config": "*",
+    "@types/bun": "latest",
     "@types/react": "19.1.1",
     "@types/react-dom": "^19.1.2",
     "typescript": "^5.8.3"

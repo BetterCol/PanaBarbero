@@ -1,5 +1,5 @@
 {
-  "name": "@repo/ai",
+  "name": "@pbarb/ai",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -7,18 +7,18 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@ai-sdk/openai": "^1.3.10",
+    "@ai-sdk/openai": "^1.3.12",
     "@t3-oss/env-nextjs": "^0.12.0",
-    "ai": "^4.3.5",
+    "ai": "^4.3.7",
     "react": "^19.1.0",
     "react-markdown": "^10.1.0",
     "tailwind-merge": "^3.2.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@repo/typescript-config": "*",
-    "@types/node": "22.14.1",
-    "@types/react": "19.1.1",
+    "@pbarb/typescript-config": "*",
+    "@types/bun": "latest",
+    "@types/react": "19.1.2",
     "@types/react-dom": "^19.1.2"
   }
 }

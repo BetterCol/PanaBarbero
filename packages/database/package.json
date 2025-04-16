@@ -1,5 +1,5 @@
 {
-  "name": "@repo/database",
+  "name": "@pbarb/database",
   "version": "0.0.0",
   "main": "./index.ts",
   "types": "./index.ts",
@@ -20,8 +20,8 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@repo/typescript-config": "*",
-    "@types/node": "22.14.1",
+    "@pbarb/typescript-config": "*",
+    "@types/bun": "latest",
     "@types/ws": "^8.18.1",
     "bufferutil": "^4.0.9",
     "prisma": "6.4.1",
