@@ -14,15 +14,19 @@ export const auth = betterAuth({
     provider: "pg",
     schema,
   }),
-  socialProviders: {
-    google: {
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    },
-  },
+  // socialProviders: {
+  //   google: {
+  //     clientId: process.env.GOOGLE_CLIENT_ID!,
+  //     clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+  //   },
+  // },
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: false,
+    password: {
+      hash: Bun.password.hash,
+      verify: ({ hash, password }) => Bun.password.verify(password, hash),
+    },
   },
   secondaryStorage: {
     delete: deleteCache,
@@ -41,6 +45,7 @@ export const auth = betterAuth({
       },
     },
   },
+  secret: process.env.BETTER_AUTH_SECRET!,
   emailVerification: {
     sendOnSignUp: false,
     autoSignInAfterVerification: true,
@@ -50,10 +55,10 @@ export const auth = betterAuth({
     twoFactor(),
     passkey(),
     oneTap(),
-    captcha({
-      provider: "hcaptcha",
-      secretKey: process.env.HCAPTCHA_SECRET_KEY!,
-    }),
+    // captcha({
+    //   provider: "hcaptcha",
+    //   secretKey: process.env.HCAPTCHA_SECRET_KEY!,
+    // }),
     oAuthProxy(),
     nextCookies(),
   ],

@@ -1,6 +1,8 @@
-import { boolean, integer, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { boolean, integer, pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 import { ROLES } from "@/constants/roles";
+
+export const userRole = pgEnum("role", [ROLES.USER, ROLES.ADMIN, ROLES.BARBER]);
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -15,7 +17,7 @@ export const user = pgTable("user", {
     .$defaultFn(() => new Date())
     .notNull(),
   twoFactorEnabled: boolean("two_factor_enabled").default(false),
-  role: text("role").default(ROLES.USER),
+  role: userRole().notNull().default(ROLES.USER),
 });
 
 export const account = pgTable("account", {
