@@ -15,27 +15,27 @@ export const UserDropdown = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="flex items-center gap-2 cursor-pointer h-12" variant="ghost">
-          <Avatar>
+        <Button className="flex items-center cursor-pointer w-8 md:w-auto" variant="outline">
+          <Avatar className="size-6">
             <AvatarImage src="https://github.com/shadcn.png" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-          Andres Rodriguez
+          <span className="hidden md:inline-flex">Andres Rodriguez</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-        <DropdownMenuLabel>
-          <Button variant="destructive">
-            <LogOutIcon />
-            <span className="hidden md:inline-flex">Cerrar sesión</span>
-          </Button>
-        </DropdownMenuLabel>
+        <DropdownMenuLabel>Andres Rodriguez</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>Profile</DropdownMenuItem>
         <DropdownMenuItem>Billing</DropdownMenuItem>
         <DropdownMenuItem>Team</DropdownMenuItem>
         <DropdownMenuItem>Subscription</DropdownMenuItem>
+        <DropdownMenuItem>
+          <Button variant="destructive">
+            <LogOutIcon />
+            <span>Cerrar sesión</span>
+          </Button>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
