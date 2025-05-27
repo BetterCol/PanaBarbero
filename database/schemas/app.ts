@@ -20,7 +20,7 @@ export const APPOINTMENT_STATUS = {
 
 export type AppointmentStatus = (typeof APPOINTMENT_STATUS)[keyof typeof APPOINTMENT_STATUS];
 
-export const appointmentStatusEnum = pgEnum("status", [
+export const appointmentStatusEnum = pgEnum("appintment_status", [
   APPOINTMENT_STATUS.CREATED,
   APPOINTMENT_STATUS.CONFIRMED,
   APPOINTMENT_STATUS.COMPLETED,

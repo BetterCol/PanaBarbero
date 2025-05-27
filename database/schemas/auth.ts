@@ -2,7 +2,7 @@ import { boolean, integer, pgEnum, pgTable, text, timestamp } from "drizzle-orm/
 
 import { ROLES } from "@/constants/roles";
 
-export const userRole = pgEnum("role", [ROLES.USER, ROLES.ADMIN, ROLES.BARBER]);
+export const userRole = pgEnum("user_role", [ROLES.USER, ROLES.ADMIN, ROLES.BARBER]);
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),

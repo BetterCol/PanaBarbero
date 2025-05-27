@@ -1,5 +1,5 @@
 {
-  "id": "16c74c04-d8d9-4a8a-ab13-1a27402052cf",
+  "id": "1527afa6-659b-404f-9883-c1f2f46e7629",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -40,7 +40,7 @@
         },
         "status": {
           "name": "status",
-          "type": "status",
+          "type": "appintment_status",
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true,
@@ -715,9 +715,10 @@
         },
         "role": {
           "name": "role",
-          "type": "text",
+          "type": "user_role",
+          "typeSchema": "public",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": "'user'"
         }
       },
@@ -788,8 +789,8 @@
     }
   },
   "enums": {
-    "public.status": {
-      "name": "status",
+    "public.appintment_status": {
+      "name": "appintment_status",
       "schema": "public",
       "values": [
         "created",
@@ -798,6 +799,15 @@
         "cancelled",
         "no_show",
         "rescheduled"
+      ]
+    },
+    "public.user_role": {
+      "name": "user_role",
+      "schema": "public",
+      "values": [
+        "user",
+        "admin",
+        "barber"
       ]
     }
   },

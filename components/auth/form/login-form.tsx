@@ -53,6 +53,10 @@ export const LoginForm = () => {
 
   const form = useForm({
     resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
   const onSubmit = form.handleSubmit(async (data) => {

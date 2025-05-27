@@ -1,11 +1,12 @@
-CREATE TYPE "public"."status" AS ENUM('created', 'confirmed', 'completed', 'cancelled', 'no_show', 'rescheduled');--> statement-breakpoint
+CREATE TYPE "public"."appintment_status" AS ENUM('created', 'confirmed', 'completed', 'cancelled', 'no_show', 'rescheduled');--> statement-breakpoint
+CREATE TYPE "public"."user_role" AS ENUM('user', 'admin', 'barber');--> statement-breakpoint
 CREATE TABLE "appointments" (
 	"barbershop_id" text NOT NULL,
 	"barber_id" text NOT NULL,
 	"service_id" text NOT NULL,
 	"customer_id" text NOT NULL,
 	"appointment_date" timestamp NOT NULL,
-	"status" "status" DEFAULT 'created' NOT NULL,
+	"status" "appintment_status" DEFAULT 'created' NOT NULL,
 	"id" text PRIMARY KEY NOT NULL,
 	"uuid" uuid NOT NULL,
 	"created_at" timestamp,
@@ -95,7 +96,7 @@ CREATE TABLE "user" (
 	"created_at" timestamp NOT NULL,
 	"updated_at" timestamp NOT NULL,
 	"two_factor_enabled" boolean DEFAULT false,
-	"role" text DEFAULT 'user',
+	"role" "user_role" DEFAULT 'user' NOT NULL,
 	CONSTRAINT "user_email_unique" UNIQUE("email")
 );
 --> statement-breakpoint
