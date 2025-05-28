@@ -17,14 +17,15 @@ export const UserDropdown = () => {
       <DropdownMenuTrigger asChild>
         <Button className="flex items-center cursor-pointer w-8 md:w-auto" variant="outline">
           <Avatar className="size-6">
-            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarImage src="https://github.com/shadcn.png" alt="User Avatar" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <span className="hidden md:inline-flex">Andres Rodriguez</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuLabel>Andres Rodriguez</DropdownMenuLabel>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel className="md:hidden">Andres Rodriguez</DropdownMenuLabel>
+        <DropdownMenuLabel className="hidden md:inline-flex">Mi cuenta</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>Profile</DropdownMenuItem>
         <DropdownMenuItem>Billing</DropdownMenuItem>
@@ -32,7 +33,7 @@ export const UserDropdown = () => {
         <DropdownMenuItem>Subscription</DropdownMenuItem>
         <DropdownMenuItem>
           <Button variant="destructive">
-            <LogOutIcon />
+            <LogOutIcon className="text-primary-foreground" />
             <span>Cerrar sesión</span>
           </Button>
         </DropdownMenuItem>

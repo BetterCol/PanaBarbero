@@ -10,9 +10,9 @@ import { UserDropdown } from "./user-dropdown";
 export const DashboardHeader = () => {
   return (
     <>
-      <header className="w-full h-16 bg-accent flex items-center justify-between p-4">
+      <header className="w-full h-15 bg-accent flex items-center justify-between p-4">
         <div className="w-full max-w-[100rem] mx-auto flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold tracking-tighter text-balance">
+          <Link href="/" className="text-xl font-semibold tracking-tighter text-balance">
             PanaBarbero
           </Link>
           <CommandDialog />
