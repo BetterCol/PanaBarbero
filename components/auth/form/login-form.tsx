@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { EyeIcon, EyeOffIcon, KeyRound } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { object, string } from "zod";
@@ -21,7 +21,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { signIn } from "@/lib/auth-client";
+import { Separator } from "@/components/ui/separator";
+import { oneTap, signIn } from "@/lib/auth-client";
 
 const loginSchema = object({
   email: string({
@@ -66,6 +67,9 @@ export const LoginForm = () => {
       rememberMe: true,
     });
 
+    console.log(login);
+    console.log(error);
+
     if (error) {
       toast.error(error.message ?? "Error al iniciar sesión");
       return;
@@ -81,6 +85,10 @@ export const LoginForm = () => {
     form.clearErrors();
     push("/dashboard");
   });
+
+  useEffect(() => {
+    oneTap();
+  }, []);
 
   return (
     <Form {...form}>
@@ -121,7 +129,7 @@ export const LoginForm = () => {
                   />
                   <Button
                     type="button"
-                    className="absolute top-0.5 right-0"
+                    className="absolute top-0.5 right-1"
                     variant="ghost"
                     size="icon"
                     onClick={() => setShow(!show)}
@@ -150,6 +158,24 @@ export const LoginForm = () => {
               {form.formState.isSubmitting ? "Iniciando sesión..." : "Iniciar sesión"}
             </Button>
           </div>
+        </div>
+        <Separator className="my-4" />
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <Button
+            variant="outline"
+            type="button"
+            onClick={async () => {
+              await signIn.social({
+                provider: "google",
+              });
+            }}
+          >
+            Google
+          </Button>
+          <Button variant="outline" type="button">
+            <KeyRound />
+            Passkey
+          </Button>
         </div>
       </form>
     </Form>

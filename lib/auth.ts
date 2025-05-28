@@ -12,14 +12,21 @@ import * as schema from "@/database/schemas";
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
     provider: "pg",
-    schema,
+    schema: {
+      user: schema.user,
+      passkey: schema.passkey,
+      account: schema.account,
+      verification: schema.verification,
+      twoFactor: schema.twoFactor,
+    },
   }),
-  // socialProviders: {
-  //   google: {
-  //     clientId: process.env.GOOGLE_CLIENT_ID!,
-  //     clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-  //   },
-  // },
+  socialProviders: {
+    google: {
+      clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      redirectURI: `${process.env.BETTER_AUTH_URL}/api/auth/callback/google`,
+    },
+  },
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: false,
@@ -31,7 +38,7 @@ export const auth = betterAuth({
   secondaryStorage: {
     delete: deleteCache,
     get: getCache,
-    set: (key, value, ttl) => setCache(key, value, ttl ?? 0),
+    set: (key, value, ttl) => setCache(key, value, ttl ?? 3600),
   },
   rateLimit: {
     storage: "secondary-storage",
@@ -50,6 +57,7 @@ export const auth = betterAuth({
     sendOnSignUp: false,
     autoSignInAfterVerification: true,
   },
+  trustedOrigins: [process.env.BETTER_AUTH_URL!, "http://localhost:3000"],
   appName: "PanaBarbero",
   plugins: [
     twoFactor(),

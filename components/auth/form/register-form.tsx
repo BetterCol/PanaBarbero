@@ -160,7 +160,7 @@ export const RegisterForm = () => {
                     />
                     <Button
                       type="button"
-                      className="absolute top-0.5 right-0"
+                      className="absolute top-0.5 right-1"
                       variant="ghost"
                       size="icon"
                       onClick={() => setShowFirst(!showFirst)}
@@ -191,7 +191,7 @@ export const RegisterForm = () => {
                     />
                     <Button
                       type="button"
-                      className="absolute top-0.5 right-0"
+                      className="absolute top-0.5 right-1"
                       variant="ghost"
                       size="icon"
                       onClick={() => setShowSecond(!showSecond)}

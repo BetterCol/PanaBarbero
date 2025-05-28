@@ -102,7 +102,7 @@ export const HeaderAnalytics = () => {
           </CardFooter>
         </Card>
       </div>
-      <Card className="w-full col-span-3 sm:col-span-2 min-h-[24.75rem]">
+      <Card className="w-full col-span-3 sm:col-span-2 min-h-[24.8rem]">
         <CardHeader>
           <CardTitle className="text-muted-foreground">Próximas citas</CardTitle>
           <CardAction>

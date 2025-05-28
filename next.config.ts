@@ -15,6 +15,10 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     reactCompiler: true,
+    staleTimes: {
+      dynamic: 60,
+      static: 300,
+    },
   },
 };
 

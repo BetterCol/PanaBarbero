@@ -33,6 +33,7 @@ export const authClient = createAuthClient({
           break;
 
         case 500:
+          console.log(ctx.error);
           toast.error("Ocurrió un error. Intenta nuevamente más tarde.");
           break;
       }
@@ -40,4 +41,4 @@ export const authClient = createAuthClient({
   },
 });
 
-export const { signIn, signUp, signOut, useSession, getSession } = authClient;
+export const { signIn, signUp, signOut, useSession, getSession, oneTap } = authClient;
