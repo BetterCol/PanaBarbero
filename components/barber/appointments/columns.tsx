@@ -46,22 +46,16 @@ export const columns: ColumnDef<AppointmentColumn>[] = [
   },
   {
     accessorKey: "appointmentDate",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Fecha y hora de reserva" />
-    ),
+    header: ({ column }) => <DataTableColumnHeader column={column} title="Hora de reserva" />,
     cell: ({ row }) => {
       const date = row.original.appointmentDate;
 
       return (
         <span>
           {date.toLocaleTimeString("es-CO", {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
             hour12: true,
             hour: "2-digit",
             minute: "2-digit",
-            timeZone: "America/Bogota",
           })}
         </span>
       );
