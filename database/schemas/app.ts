@@ -107,3 +107,5 @@ export const appointments = pgTable("appointments", {
   status: appointmentStatusEnum().notNull().default("created"),
   ...baseColumns,
 });
+
+export type Appointment = typeof appointments.$inferSelect;
