@@ -210,22 +210,4 @@ export const data: AppointmentColumn[] = [
     serviceId: "service-793",
     customerId: "customer-105",
   },
-  {
-    uuid: crypto.randomUUID(),
-    appointmentDate: new Date("2023-10-06T13:30:00Z"),
-    status: "cancelled",
-    barberId: "barber-128",
-    barbershopId: "barbershop-461",
-    serviceId: "service-794",
-    customerId: "customer-106",
-  },
-  {
-    uuid: crypto.randomUUID(),
-    appointmentDate: new Date("2023-10-07T08:00:00Z"),
-    status: "created",
-    barberId: "barber-129",
-    barbershopId: "barbershop-462",
-    serviceId: "service-795",
-    customerId: "customer-107",
-  },
 ];
