@@ -15,7 +15,7 @@ export const UserDropdown = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="flex items-center cursor-pointer w-8 md:w-auto" variant="outline">
+        <Button className="flex w-8 cursor-pointer items-center md:w-auto" variant="outline">
           <Avatar className="size-6">
             <AvatarImage src="https://github.com/shadcn.png" alt="User Avatar" />
             <AvatarFallback>CN</AvatarFallback>

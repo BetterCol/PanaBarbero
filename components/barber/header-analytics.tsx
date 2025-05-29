@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 
-import { ArrowRight, Book, Calendar, DollarSign, Scissors } from "lucide-react";
+import { ArrowRight, Book, Calendar, DollarSign } from "lucide-react";
 
-import { Badge, type BadgeProps } from "@/components/ui/badge";
+import type { BadgeProps } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -55,8 +56,8 @@ export const HeaderAnalytics = () => {
   };
 
   return (
-    <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 place-items-start">
-      <div className="col-span-3 sm:col-span-2 gap-4 grid w-full">
+    <div className="grid grid-cols-1 place-items-start gap-4 sm:grid-cols-2 md:grid-cols-4">
+      <div className="col-span-3 grid w-full gap-4 sm:col-span-2">
         <Card className="mx-auto w-full">
           <CardHeader>
             <CardTitle className="text-muted-foreground">Reservaciones</CardTitle>
@@ -65,7 +66,7 @@ export const HeaderAnalytics = () => {
             </CardAction>
           </CardHeader>
           <CardContent>
-            <Paragraph weight="bold" className="font-mono tabular-nums text-xl">
+            <Paragraph weight="bold" className="font-mono text-xl tabular-nums">
               500
             </Paragraph>
           </CardContent>
@@ -86,7 +87,7 @@ export const HeaderAnalytics = () => {
             </CardAction>
           </CardHeader>
           <CardContent>
-            <Paragraph weight="bold" className="font-mono tabular-nums text-xl">
+            <Paragraph weight="bold" className="font-mono text-xl tabular-nums">
               {new Intl.NumberFormat("es-CO", {
                 style: "currency",
                 currency: "COP",
@@ -102,7 +103,7 @@ export const HeaderAnalytics = () => {
           </CardFooter>
         </Card>
       </div>
-      <Card className="w-full col-span-3 sm:col-span-2 min-h-[24.8rem]">
+      <Card className="col-span-3 w-full sm:col-span-2 md:min-h-[23.9rem]">
         <CardHeader>
           <CardTitle className="text-muted-foreground">Próximas citas</CardTitle>
           <CardAction>

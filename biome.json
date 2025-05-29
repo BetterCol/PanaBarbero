@@ -81,6 +81,16 @@
         "noUnsafeNegation": "off",
         "useGetterReturn": "off",
         "useNamespaceKeyword": "error"
+      },
+      "nursery": {
+        "useSortedClasses": {
+          "fix": "safe",
+          "level": "warn",
+          "options": {
+            "attributes": ["classList"],
+            "functions": ["clsx", "cva", "tw", "tw.*"]
+          }
+        }
       }
     }
   },

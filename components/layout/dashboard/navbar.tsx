@@ -1,3 +1,5 @@
+import { unstable_ViewTransition as ViewTransition } from "react";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -18,15 +20,17 @@ export const DesktopNavbar = () => {
   const links = DASHBOARD_LINKS[(data?.user?.role as keyof typeof DASHBOARD_LINKS) ?? "barber"];
 
   return (
-    <nav className="w-full h-14 border-y bg-card items-center hidden sm:flex">
-      <div className="flex items-center sm:space-x-2 md:space-x-4 w-full max-w-[100rem] mx-auto justify-center sm:justify-start border-l px-4">
+    <nav className="hidden h-14 w-full items-center border-y bg-card sm:flex">
+      <div className="mx-auto flex w-full max-w-[100rem] items-center justify-center border-l px-4 sm:justify-start sm:space-x-2 md:space-x-4">
         {links.map((link) => (
-          <Button variant={pathname === link.href ? "outline" : "ghost"} key={link.href} asChild>
-            <Link href={link.href}>
-              <link.icon className="hidden md:block" />
-              {link.label}
-            </Link>
-          </Button>
+          <ViewTransition name={link.href} key={link.href}>
+            <Button variant={pathname === link.href ? "outline" : "ghost"} asChild>
+              <Link href={link.href}>
+                <link.icon className="hidden md:block" />
+                {link.label}
+              </Link>
+            </Button>
+          </ViewTransition>
         ))}
       </div>
     </nav>
@@ -48,22 +52,24 @@ export const MobileNavbar = () => {
           <Menu />
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="space-y-2 pb-4 pr-4">
+      <DrawerContent className="space-y-2 pr-4 pb-4">
         {links.map((link) => (
-          <DrawerClose key={link.href} className="mr-auto w-full">
-            <Button
-              variant="ghost"
-              className={cn("w-full justify-start", {
-                "border-l ml-2 bg-accent w-full": pathname === link.href,
-              })}
-              asChild
-            >
-              <Link href={link.href}>
-                <link.icon />
-                {link.label}
-              </Link>
-            </Button>
-          </DrawerClose>
+          <ViewTransition key={link.href} name={link.href}>
+            <DrawerClose className="mr-auto w-full">
+              <Button
+                variant="ghost"
+                className={cn("w-full justify-start", {
+                  "ml-2 w-full border-l bg-accent": pathname === link.href,
+                })}
+                asChild
+              >
+                <Link href={link.href}>
+                  <link.icon />
+                  {link.label}
+                </Link>
+              </Button>
+            </DrawerClose>
+          </ViewTransition>
         ))}
       </DrawerContent>
     </Drawer>

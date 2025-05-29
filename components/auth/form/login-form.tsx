@@ -144,12 +144,12 @@ export const LoginForm = () => {
           )}
         />
 
-        <div className="flex flex-col-reverse items-start sm:flex-row gap-6 sm:items-center justify-between">
+        <div className="flex flex-col-reverse items-start justify-between gap-6 sm:flex-row sm:items-center">
           <Button asChild variant="destructive">
             <Link href="/register">No tengo cuenta</Link>
           </Button>
 
-          <div className="space-x-1 flex flex-row-reverse sm:flex-row">
+          <div className="flex flex-row-reverse space-x-1 sm:flex-row">
             <Button asChild variant="link">
               <Link href="/forgot-password">Restaurar contraseña</Link>
             </Button>

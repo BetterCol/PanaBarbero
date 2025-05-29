@@ -33,7 +33,7 @@ export const CommandDialog = () => {
   return (
     <>
       <Input
-        className="hidden sm:inline-flex max-w-80 truncate md:max-w-xs lg:max-w-md"
+        className="hidden max-w-80 truncate sm:inline-flex md:max-w-xs lg:max-w-md"
         placeholder={`Presiona ${commandKey} para buscar`}
         onClick={() => setOpen(true)}
         onKeyDown={(e) => {
