@@ -2,7 +2,7 @@
 
 import type { ColumnDef } from "@tanstack/react-table";
 
-import { MoreHorizontal } from "lucide-react";
+import { Calendar, Check, Clock, Copy, MoreHorizontal } from "lucide-react";
 
 import { DataTableColumnHeader } from "@/components/table/column-header";
 import { Badge } from "@/components/ui/badge";
@@ -20,7 +20,7 @@ import type { Appointment } from "@/database/schemas";
 import { useClipboard } from "@/hooks/use-clipboard";
 import { getBadgeVariant, status } from "./utils";
 
-export type AppointmentColumn = Omit<Appointment, "id" | "createdAt" | "updatedAt">;
+export type AppointmentColumn = Omit<Appointment, "id" | "barberId" | "createdAt" | "updatedAt">;
 
 export const columns: ColumnDef<AppointmentColumn>[] = [
   {
@@ -75,10 +75,6 @@ export const columns: ColumnDef<AppointmentColumn>[] = [
     header: "Servicio",
   },
   {
-    accessorKey: "barberId",
-    header: "Barbero",
-  },
-  {
     accessorKey: "customerId",
     header: "Cliente",
   },
@@ -96,18 +92,31 @@ export const columns: ColumnDef<AppointmentColumn>[] = [
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon">
+            <Button variant="ghost" size="icon">
               <span className="sr-only">Abrir menú de acciones</span>
               <MoreHorizontal />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Acciones</DropdownMenuLabel>
+            <DropdownMenuLabel>Selecciona una acción</DropdownMenuLabel>
+
+            <DropdownMenuSeparator />
+
             <DropdownMenuItem onClick={() => copyToClipboard(appointment.customerId)}>
+              <Copy />
               Copiar ID del cliente
             </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Clock />
+              Reagendar cita
+            </DropdownMenuItem>
+
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Ver cliente</DropdownMenuItem>
+
+            <DropdownMenuItem className="text-green-600">
+              <Check />
+              Marcar como completada
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

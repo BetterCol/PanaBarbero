@@ -34,7 +34,6 @@ export const data: AppointmentColumn[] = [
     uuid: crypto.randomUUID(),
     appointmentDate: new Date("2025-05-29T09:30:00.000Z"), // Example Today (8 AM - 6 PM)
     status: "created",
-    barberId: "barber-abcde",
     barbershopId: "barbershop-fghij",
     serviceId: "service-klmno",
     customerId: "customer-pqrst",
@@ -43,7 +42,6 @@ export const data: AppointmentColumn[] = [
     uuid: crypto.randomUUID(),
     appointmentDate: new Date("2025-05-29T14:15:00.000Z"), // Example Today (8 AM - 6 PM)
     status: "confirmed",
-    barberId: "barber-uvwxy",
     barbershopId: "barbershop-z1234",
     serviceId: "service-56789",
     customerId: "customer-0abc",
@@ -52,7 +50,6 @@ export const data: AppointmentColumn[] = [
     uuid: crypto.randomUUID(),
     appointmentDate: new Date("2025-05-29T11:00:00.000Z"), // Example Today (8 AM - 6 PM)
     status: "completed",
-    barberId: "barber-defgh",
     barbershopId: "barbershop-ijklm",
     serviceId: "service-nopqr",
     customerId: "customer-stuvw",
@@ -61,7 +58,6 @@ export const data: AppointmentColumn[] = [
     uuid: crypto.randomUUID(),
     appointmentDate: new Date("2025-05-29T17:45:00.000Z"), // Example Today (8 AM - 6 PM)
     status: "cancelled",
-    barberId: "barber-xyz12",
     barbershopId: "barbershop-34567",
     serviceId: "service-890ab",
     customerId: "customer-cdefg",
@@ -71,7 +67,6 @@ export const data: AppointmentColumn[] = [
     uuid: crypto.randomUUID(),
     appointmentDate: new Date("2025-06-10T10:00:00.000Z"), // Example Date in Future
     status: "created",
-    barberId: "barber-hijkl",
     barbershopId: "barbershop-mnopq",
     serviceId: "service-rstuv",
     customerId: "customer-wxyz1",
@@ -80,7 +75,6 @@ export const data: AppointmentColumn[] = [
     uuid: crypto.randomUUID(),
     appointmentDate: new Date("2025-07-01T15:30:00.000Z"), // Example Date in Future
     status: "confirmed",
-    barberId: "barber-23456",
     barbershopId: "barbershop-7890a",
     serviceId: "service-bcdef",
     customerId: "customer-ghijk",
@@ -89,7 +83,6 @@ export const data: AppointmentColumn[] = [
     uuid: crypto.randomUUID(),
     appointmentDate: new Date("2025-08-20T09:00:00.000Z"), // Example Date in Future
     status: "completed",
-    barberId: "barber-lmnop",
     barbershopId: "barbershop-qrstu",
     serviceId: "service-vwxyz",
     customerId: "customer-12345",
@@ -98,7 +91,6 @@ export const data: AppointmentColumn[] = [
     uuid: crypto.randomUUID(),
     appointmentDate: new Date("2025-09-05T11:45:00.000Z"), // Example Date in Future
     status: "cancelled",
-    barberId: "barber-67890",
     barbershopId: "barbershop-abcde",
     serviceId: "service-fghij",
     customerId: "customer-klmno",
@@ -107,7 +99,6 @@ export const data: AppointmentColumn[] = [
     uuid: crypto.randomUUID(),
     appointmentDate: new Date("2025-10-15T14:00:00.000Z"), // Example Date in Future
     status: "created",
-    barberId: "barber-pqrst",
     barbershopId: "barbershop-uvwxy",
     serviceId: "service-z1234",
     customerId: "customer-56789",
@@ -116,7 +107,6 @@ export const data: AppointmentColumn[] = [
     uuid: crypto.randomUUID(),
     appointmentDate: new Date("2025-11-30T16:30:00.000Z"), // Example Date in Future
     status: "confirmed",
-    barberId: "barber-0abc",
     barbershopId: "barbershop-defgh",
     serviceId: "service-ijklm",
     customerId: "customer-nopqr",
@@ -125,7 +115,6 @@ export const data: AppointmentColumn[] = [
     uuid: crypto.randomUUID(),
     appointmentDate: new Date("2026-01-10T08:00:00.000Z"), // Example Date in Future
     status: "completed",
-    barberId: "barber-stuvw",
     barbershopId: "barbershop-xyz12",
     serviceId: "service-34567",
     customerId: "customer-890ab",
@@ -134,7 +123,6 @@ export const data: AppointmentColumn[] = [
     uuid: crypto.randomUUID(),
     appointmentDate: new Date("2026-02-14T10:00:00.000Z"), // Example Date in Future
     status: "cancelled",
-    barberId: "barber-cdefg",
     barbershopId: "barbershop-hijkl",
     serviceId: "service-mnopq",
     customerId: "customer-rstuv",
@@ -143,7 +131,6 @@ export const data: AppointmentColumn[] = [
     uuid: crypto.randomUUID(),
     appointmentDate: new Date("2026-03-25T13:00:00.000Z"), // Example Date in Future
     status: "created",
-    barberId: "barber-wxyz1",
     barbershopId: "barbershop-23456",
     serviceId: "service-7890a",
     customerId: "customer-bcdef",
@@ -152,7 +139,6 @@ export const data: AppointmentColumn[] = [
     uuid: crypto.randomUUID(),
     appointmentDate: new Date("2026-04-01T17:00:00.000Z"), // Example Date in Future
     status: "confirmed",
-    barberId: "barber-ghijk",
     barbershopId: "barbershop-lmnop",
     serviceId: "service-qrstu",
     customerId: "customer-vwxyz",
@@ -161,7 +147,6 @@ export const data: AppointmentColumn[] = [
     uuid: crypto.randomUUID(),
     appointmentDate: new Date("2026-05-01T09:45:00.000Z"), // Example Date in Future
     status: "completed",
-    barberId: "barber-12345",
     barbershopId: "barbershop-67890",
     serviceId: "service-abcde",
     customerId: "customer-fghij",
@@ -170,7 +155,6 @@ export const data: AppointmentColumn[] = [
     uuid: crypto.randomUUID(),
     appointmentDate: new Date("2026-05-18T12:00:00.000Z"), // Example Date in Future
     status: "cancelled",
-    barberId: "barber-klmno",
     barbershopId: "barbershop-pqrst",
     serviceId: "service-uvwxy",
     customerId: "customer-z1234",
@@ -179,7 +163,6 @@ export const data: AppointmentColumn[] = [
     uuid: crypto.randomUUID(),
     appointmentDate: new Date("2026-06-22T14:30:00.000Z"), // Example Date in Future
     status: "created",
-    barberId: "barber-56789",
     barbershopId: "barbershop-0abc",
     serviceId: "service-defgh",
     customerId: "customer-ijklm",
@@ -188,7 +171,6 @@ export const data: AppointmentColumn[] = [
     uuid: crypto.randomUUID(),
     appointmentDate: new Date("2026-07-04T10:00:00.000Z"), // Example Date in Future
     status: "confirmed",
-    barberId: "barber-nopqr",
     barbershopId: "barbershop-stuvw",
     serviceId: "service-xyz12",
     customerId: "customer-34567",
@@ -197,7 +179,6 @@ export const data: AppointmentColumn[] = [
     uuid: crypto.randomUUID(),
     appointmentDate: new Date("2026-08-11T11:00:00.000Z"), // Example Date in Future
     status: "completed",
-    barberId: "barber-890ab",
     barbershopId: "barbershop-cdefg",
     serviceId: "service-hijkl",
     customerId: "customer-mnopq",
@@ -206,7 +187,6 @@ export const data: AppointmentColumn[] = [
     uuid: crypto.randomUUID(),
     appointmentDate: new Date("2026-09-01T15:00:00.000Z"), // Example Date in Future
     status: "cancelled",
-    barberId: "barber-rstuv",
     barbershopId: "barbershop-wxyz1",
     serviceId: "service-23456",
     customerId: "customer-7890a",
