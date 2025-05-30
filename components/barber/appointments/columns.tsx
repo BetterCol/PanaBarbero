@@ -2,7 +2,7 @@
 
 import type { ColumnDef } from "@tanstack/react-table";
 
-import { Calendar, Check, Clock, Copy, MoreHorizontal } from "lucide-react";
+import { Check, Clock, Copy, MoreHorizontal } from "lucide-react";
 
 import { DataTableColumnHeader } from "@/components/table/column-header";
 import { Badge } from "@/components/ui/badge";
@@ -16,13 +16,19 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import type { Appointment } from "@/database/schemas";
+import type { Appointment, AppointmentWithRelations } from "@/database/schemas";
 import { useClipboard } from "@/hooks/use-clipboard";
 import { getBadgeVariant, status } from "./utils";
 
-export type AppointmentColumn = Omit<Appointment, "id" | "barberId" | "createdAt" | "updatedAt">;
+export type CustomerColumn = Pick<AppointmentWithRelations["customer"], "id" | "name">;
+export type ServiceColumn = Pick<AppointmentWithRelations["service"], "id" | "name">;
 
-export const columns: ColumnDef<AppointmentColumn>[] = [
+export type AppointmentWithRelationsColumn = Appointment & {
+  customer: CustomerColumn;
+  service: ServiceColumn;
+};
+
+export const columns: ColumnDef<AppointmentWithRelationsColumn>[] = [
   {
     id: "select",
     header: ({ table }) => (

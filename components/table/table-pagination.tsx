@@ -9,7 +9,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Paragraph } from "@/components/ui/typography";
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;
@@ -17,38 +18,39 @@ interface DataTablePaginationProps<TData> {
 
 export function DataTablePagination<TData>({ table }: DataTablePaginationProps<TData>) {
   return (
-    <div className="flex flex-col items-start justify-between gap-4 px-2 pt-4">
-      <div className="flex-1 text-muted-foreground text-sm">
-        {table.getFilteredSelectedRowModel().rows.length} de{" "}
-        {table.getFilteredRowModel().rows.length} fila(s) seleccionada(s)
-      </div>
-      <div className="flex w-full flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+    <div className="flex w-full flex-col items-start justify-between gap-4 px-2 pt-4 md:flex-row md:items-center">
+      <div className="flex w-full flex-col items-start gap-4 md:flex-row md:items-center">
         <div className="flex items-center space-x-2">
-          <TooltipProvider>
-            <p className="font-medium text-sm">Mostrar</p>
-            <Select
-              value={`${table.getState().pagination.pageSize}`}
-              onValueChange={(value) => {
-                table.setPageSize(Number(value));
-              }}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder={table.getState().pagination.pageSize} />
-              </SelectTrigger>
-              <SelectContent side="top">
-                {[5, 10, 15, 20].map((pageSize) => (
-                  <SelectItem key={pageSize} value={`${pageSize}`}>
-                    {pageSize}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </TooltipProvider>
+          <p className="font-medium text-sm">Mostrar</p>
+          <Select
+            value={`${table.getState().pagination.pageSize}`}
+            onValueChange={(value) => {
+              table.setPageSize(Number(value));
+            }}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder={table.getState().pagination.pageSize} />
+            </SelectTrigger>
+            <SelectContent side="top">
+              {[5, 10, 15, 20].map((pageSize) => (
+                <SelectItem key={pageSize} value={`${pageSize}`}>
+                  {pageSize}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
-        <div className="flex items-center gap-2">
-          <p className="flex items-center justify-center font-medium text-sm">
+
+        <Paragraph muted>
+          {table.getFilteredSelectedRowModel().rows.length} de{" "}
+          {table.getFilteredRowModel().rows.length} fila(s) seleccionada(s)
+        </Paragraph>
+      </div>
+      <div className="flex w-full flex-col items-start justify-between gap-4 sm:flex-row sm:items-center md:justify-end">
+        <div className="flex items-center gap-4">
+          <Paragraph>
             Pagina {table.getState().pagination.pageIndex + 1} de {table.getPageCount()}
-          </p>
+          </Paragraph>
           <div className="flex items-center space-x-2">
             <Tooltip delayDuration={300}>
               <TooltipTrigger asChild>
@@ -64,7 +66,7 @@ export function DataTablePagination<TData>({ table }: DataTablePaginationProps<T
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Ir a la primera pagina</p>
+                <Paragraph>Ir a la primera pagina</Paragraph>
               </TooltipContent>
             </Tooltip>
 
@@ -81,7 +83,7 @@ export function DataTablePagination<TData>({ table }: DataTablePaginationProps<T
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Ir a la pagina anterior</p>
+                <Paragraph>Ir a la pagina anterior</Paragraph>
               </TooltipContent>
             </Tooltip>
             <Tooltip delayDuration={300}>
@@ -97,7 +99,7 @@ export function DataTablePagination<TData>({ table }: DataTablePaginationProps<T
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Ir a la pagina siguiente</p>
+                <Paragraph>Ir a la pagina siguiente</Paragraph>
               </TooltipContent>
             </Tooltip>
 
@@ -115,7 +117,7 @@ export function DataTablePagination<TData>({ table }: DataTablePaginationProps<T
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Ir a la ultima pagina</p>
+                <Paragraph>Ir a la ultima pagina</Paragraph>
               </TooltipContent>
             </Tooltip>
           </div>

@@ -1,10 +1,11 @@
 "use client";
 
+import type { FC } from "react";
+
 import Link from "next/link";
 
 import { ArrowRight, Book, Calendar, DollarSign } from "lucide-react";
 
-import type { BadgeProps } from "@/components/ui/badge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -25,36 +26,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Paragraph } from "@/components/ui/typography";
-import { APPOINTMENT_STATUS } from "@/database/schemas";
+import type { Appointment } from "@/database/schemas";
+import { TRANSLATED_APPOINTMENT_STATUS } from "@/database/schemas";
+import { getBadgeVariant } from "./appointments/utils";
 
-export const HeaderAnalytics = () => {
-  const status = [
-    { label: APPOINTMENT_STATUS.CREATED, color: "bg-green-500" },
-    { label: APPOINTMENT_STATUS.CANCELLED, color: "bg-yellow-500" },
-    { label: APPOINTMENT_STATUS.COMPLETED, color: "bg-blue-500" },
-    { label: APPOINTMENT_STATUS.RESCHEDULED, color: "bg-red-500" },
-    { label: APPOINTMENT_STATUS.NO_SHOW, color: "bg-red-500" },
-  ];
+interface HeaderAnalyticsProps {
+  appointments: Appointment[];
+}
 
-  const badgeVariant = (statusLabel: string): BadgeProps["variant"] => {
-    const statusItem = status.find((item) => item.label === statusLabel);
-
-    switch (statusItem?.label) {
-      case APPOINTMENT_STATUS.CREATED:
-        return "default";
-      case APPOINTMENT_STATUS.CANCELLED:
-        return "destructive";
-      case APPOINTMENT_STATUS.COMPLETED:
-        return "success";
-      case APPOINTMENT_STATUS.RESCHEDULED:
-        return "outline";
-      case APPOINTMENT_STATUS.NO_SHOW:
-        return "warning";
-      default:
-        return "default";
-    }
-  };
-
+export const HeaderAnalytics: FC<HeaderAnalyticsProps> = ({ appointments }) => {
   return (
     <div className="grid grid-cols-1 place-items-start gap-4 sm:grid-cols-2 md:grid-cols-4">
       <div className="col-span-3 grid w-full gap-4 sm:col-span-2">
@@ -122,56 +102,35 @@ export const HeaderAnalytics = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell>27 de julio</TableCell>
-                <TableCell className="text-center">
-                  <Badge variant={badgeVariant(status[0].label)} className="rounded-full">
-                    Creado
-                  </Badge>
-                </TableCell>
-                <TableCell className="text-center">Corte de pelo</TableCell>
-                <TableCell className="text-right">5:00 PM</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>27 de julio</TableCell>
-                <TableCell className="text-center">
-                  <Badge variant={badgeVariant(status[1].label)} className="rounded-full">
-                    Cancelado
-                  </Badge>
-                </TableCell>
-                <TableCell className="text-center">Corte de barba</TableCell>
-                <TableCell className="text-right">5:00 PM</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>27 de julio</TableCell>
-                <TableCell className="text-center">
-                  <Badge variant={badgeVariant(status[2].label)} className="rounded-full">
-                    Completado
-                  </Badge>
-                </TableCell>
-                <TableCell className="text-center">Arreglo de cejas</TableCell>
-                <TableCell className="text-right">5:00 PM</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>27 de julio</TableCell>
-                <TableCell className="text-center">
-                  <Badge variant={badgeVariant(status[3].label)} className="rounded-full">
-                    Reagendado
-                  </Badge>
-                </TableCell>
-                <TableCell className="text-center">Bigote</TableCell>
-                <TableCell className="text-right">5:00 PM</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>27 de julio</TableCell>
-                <TableCell className="text-center">
-                  <Badge variant={badgeVariant(status[4].label)} className="rounded-full">
-                    No asistió
-                  </Badge>
-                </TableCell>
-                <TableCell className="text-center">Limpieza facial</TableCell>
-                <TableCell className="text-right">5:00 PM</TableCell>
-              </TableRow>
+              {appointments.map((appointment) => {
+                const variant = getBadgeVariant(appointment.status);
+                const statusLabel = TRANSLATED_APPOINTMENT_STATUS[appointment.status];
+
+                return (
+                  <TableRow key={appointment.uuid}>
+                    <TableCell>
+                      {appointment.appointmentDate.toLocaleDateString("es-CO", {
+                        weekday: "long",
+                        month: "2-digit",
+                        day: "numeric",
+                      })}
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <Badge variant={variant} className="rounded-full">
+                        {statusLabel}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-center">{appointment.serviceId}</TableCell>
+                    <TableCell className="text-right">
+                      {appointment.appointmentDate.toLocaleTimeString("es-CO", {
+                        hour12: true,
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </CardContent>

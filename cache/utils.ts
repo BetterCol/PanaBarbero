@@ -1,4 +1,6 @@
-const client = new Bun.RedisClient(process.env.REDIS_URL!);
+import { Redis } from "ioredis";
+
+const client = new Redis(process.env.REDIS_URL!);
 
 export const getCache = async <T>(key: string): Promise<T | null> => {
   const value = await client.get(key);
@@ -10,7 +12,7 @@ export const getCache = async <T>(key: string): Promise<T | null> => {
   return parsedValue;
 };
 
-export const setCache = async (key: string, value: unknown, ttl: number | undefined) => {
+export const setCache = async (key: string, value: unknown, ttl?: number) => {
   await client.set(key, JSON.stringify(value), "EX", ttl ?? 60 * 60);
 };
 
