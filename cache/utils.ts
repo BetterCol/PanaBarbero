@@ -1,19 +1,20 @@
-import { Redis } from "ioredis";
+import { Redis } from "@upstash/redis";
 
-const client = new Redis(process.env.REDIS_URL!);
+const client = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL ?? "",
+  token: process.env.UPSTASH_REDIS_REST_TOKEN ?? "",
+});
 
-export const getCache = async <T>(key: string): Promise<T | null> => {
-  const value = await client.get(key);
+export const getCache = async <T>(key: string) => {
+  const value = (await client.get(key)) as unknown as string;
 
-  if (!value) return null;
-
-  const parsedValue = JSON.parse(value) as T;
-
-  return parsedValue;
+  return JSON.parse(value) as T | null;
 };
 
 export const setCache = async (key: string, value: unknown, ttl?: number) => {
-  await client.set(key, JSON.stringify(value), "EX", ttl ?? 60 * 60);
+  await client.set(key, JSON.stringify(value), {
+    ex: ttl ?? 60 * 60,
+  });
 };
 
 export const deleteCache = async (key: string) => {

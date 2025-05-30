@@ -1,17 +1,8 @@
 import { getCache, setCache } from "@/cache/utils";
 import { CACHE_KEYS } from "@/constants/keys";
 import { db } from "@/database/config";
-import type { AppointmentWithRelations } from "@/database/schemas";
 
 export async function getAppointmentById(appointmentId: string) {
-  const cachedAppointment = await getCache<AppointmentWithRelations>(
-    CACHE_KEYS.APPOINTMENT(appointmentId),
-  );
-
-  if (cachedAppointment) {
-    return cachedAppointment;
-  }
-
   const appointment = await db.query.appointments.findFirst({
     where: (appointments, { eq }) => eq(appointments.id, appointmentId),
     with: {
@@ -30,28 +21,15 @@ export async function getAppointmentById(appointmentId: string) {
     },
   });
 
-  const parsedAppointment = {
-    ...appointment,
-    customerId: appointment?.customer?.name ?? "",
-    serviceId: appointment?.service?.name ?? "",
-  };
+  if (appointment) {
+    await setCache(CACHE_KEYS.APPOINTMENT(appointmentId), appointment);
+  }
 
-  delete parsedAppointment.customer;
-  delete parsedAppointment.service;
-
-  return parsedAppointment;
+  return appointment;
 }
 
 export async function getAppointmentsByBarbershopId(barbershopId: string, limit = 10) {
-  const cachedAppointments = await getCache<AppointmentWithRelations[]>(
-    CACHE_KEYS.APPOINTMENTS_BY_BARBERSHOP(barbershopId),
-  );
-
-  if (cachedAppointments) {
-    return cachedAppointments;
-  }
-
-  const appointmentsList = await db.query.appointments.findMany({
+  const appointments = await db.query.appointments.findMany({
     where: (appointments, { eq, and }) =>
       and(
         eq(appointments.barbershopId, barbershopId),
@@ -73,15 +51,10 @@ export async function getAppointmentsByBarbershopId(barbershopId: string, limit 
     },
     limit,
   });
-  const parsedAppointments = appointmentsList.map((appointment) => ({
-    ...appointment,
-    customerId: appointment.customer?.name ?? "",
-    serviceId: appointment.service?.name ?? "",
-  }));
 
-  if (appointmentsList.length > 0) {
-    await setCache(CACHE_KEYS.APPOINTMENTS, parsedAppointments);
+  if (appointments.length > 0) {
+    await setCache(CACHE_KEYS.APPOINTMENTS_BY_BARBERSHOP(barbershopId), appointments);
   }
 
-  return parsedAppointments;
+  return appointments;
 }

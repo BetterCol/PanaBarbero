@@ -1,12 +1,19 @@
 import { Suspense } from "react";
 
+import dynamic from "next/dynamic";
+
 import { columns } from "@/components/barber/appointments/columns";
 import { AppointmentsTable } from "@/components/barber/appointments/data-table";
 import { Card, CardContent } from "@/components/ui/card";
 import { Paragraph } from "@/components/ui/typography";
 import { getAppointmentsByBarbershopId } from "@/database/services/appointments/get";
-import { CalendarClient } from "./_components/calendar";
-import { AppointmentsCardHeader } from "./_components/card-header";
+
+const CalendarClient = dynamic(() =>
+  import("./_components/calendar").then((mod) => mod.CalendarClient),
+);
+const AppointmentsCardHeader = dynamic(() =>
+  import("./_components/card-header").then((mod) => mod.AppointmentsCardHeader),
+);
 
 const Appointments = async () => {
   const appointments = await getAppointmentsByBarbershopId("01JWFWH0PN7WZ5KNYNBJT44JRJ");
