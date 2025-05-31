@@ -58,7 +58,12 @@ export const auth = betterAuth({
   emailVerification: {
     sendOnSignUp: false,
   },
-  trustedOrigins: [serverEnv.BETTER_AUTH_URL, "http://localhost:3000"],
+  trustedOrigins: [
+    `https://${serverEnv.VERCEL_URL}`,
+    `https://${serverEnv.VERCEL_PROJECT_PRODUCTION_URL}`,
+    serverEnv.BETTER_AUTH_URL,
+    "http://localhost:3000",
+  ],
   appName: "PanaBarbero",
   plugins: [
     twoFactor(),
