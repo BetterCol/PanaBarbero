@@ -1,4 +1,4 @@
-CREATE TYPE "public"."appintment_status" AS ENUM('created', 'confirmed', 'completed', 'cancelled', 'no_show', 'rescheduled');--> statement-breakpoint
+CREATE TYPE "public"."appintment_status" AS ENUM('created', 'completed', 'cancelled', 'no_show', 'rescheduled');--> statement-breakpoint
 CREATE TYPE "public"."user_role" AS ENUM('user', 'admin', 'barber');--> statement-breakpoint
 CREATE TABLE "appointments" (
 	"barbershop_id" text NOT NULL,
@@ -9,8 +9,8 @@ CREATE TABLE "appointments" (
 	"status" "appintment_status" DEFAULT 'created' NOT NULL,
 	"id" text PRIMARY KEY NOT NULL,
 	"uuid" uuid NOT NULL,
-	"created_at" timestamp,
-	"updated_at" timestamp
+	"created_at" timestamp NOT NULL,
+	"updated_at" timestamp NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "barbers" (
@@ -20,8 +20,8 @@ CREATE TABLE "barbers" (
 	"barbershop_id" text NOT NULL,
 	"id" text PRIMARY KEY NOT NULL,
 	"uuid" uuid NOT NULL,
-	"created_at" timestamp,
-	"updated_at" timestamp
+	"created_at" timestamp NOT NULL,
+	"updated_at" timestamp NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "barbershops" (
@@ -30,13 +30,14 @@ CREATE TABLE "barbershops" (
 	"state" text NOT NULL,
 	"city" text NOT NULL,
 	"phone" text NOT NULL,
-	"logo_url" text NOT NULL,
+	"availability" jsonb NOT NULL,
+	"logo_url" text,
 	"social_media" jsonb,
 	"owner_id" text NOT NULL,
 	"id" text PRIMARY KEY NOT NULL,
 	"uuid" uuid NOT NULL,
-	"created_at" timestamp,
-	"updated_at" timestamp
+	"created_at" timestamp NOT NULL,
+	"updated_at" timestamp NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "services" (
@@ -47,8 +48,8 @@ CREATE TABLE "services" (
 	"barbershop_id" text NOT NULL,
 	"id" text PRIMARY KEY NOT NULL,
 	"uuid" uuid NOT NULL,
-	"created_at" timestamp,
-	"updated_at" timestamp
+	"created_at" timestamp NOT NULL,
+	"updated_at" timestamp NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "account" (
@@ -120,4 +121,12 @@ ALTER TABLE "services" ADD CONSTRAINT "services_barbershop_id_barbershops_id_fk"
 ALTER TABLE "account" ADD CONSTRAINT "account_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "passkey" ADD CONSTRAINT "passkey_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "two_factor" ADD CONSTRAINT "two_factor_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-CREATE INDEX "barbershops_ownerId_idx" ON "barbershops" USING btree ("owner_id");
+CREATE INDEX "appointments_barbershopId_idx" ON "appointments" USING btree ("barbershop_id");--> statement-breakpoint
+CREATE INDEX "appointments_barberId_idx" ON "appointments" USING btree ("barber_id");--> statement-breakpoint
+CREATE INDEX "appointments_serviceId_idx" ON "appointments" USING btree ("service_id");--> statement-breakpoint
+CREATE INDEX "appointments_customerId_idx" ON "appointments" USING btree ("customer_id");--> statement-breakpoint
+CREATE UNIQUE INDEX "appointments_uuid_idx" ON "appointments" USING btree ("uuid");--> statement-breakpoint
+CREATE UNIQUE INDEX "barbers_uuid_idx" ON "barbers" USING btree ("uuid");--> statement-breakpoint
+CREATE INDEX "barbershops_ownerId_idx" ON "barbershops" USING btree ("owner_id");--> statement-breakpoint
+CREATE UNIQUE INDEX "barbershops_uuid_idx" ON "barbershops" USING btree ("uuid");--> statement-breakpoint
+CREATE UNIQUE INDEX "services_uuid_idx" ON "services" USING btree ("uuid");

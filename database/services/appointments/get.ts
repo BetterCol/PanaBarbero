@@ -1,11 +1,7 @@
 import { getCache, setCache } from "@/cache/utils";
 import { CACHE_KEYS } from "@/constants/keys";
 import { db } from "@/database/config";
-import {
-  type AppointmentWithRelations,
-  appointments as appointmentsTable,
-  user,
-} from "@/database/schemas";
+import type { AppointmentWithRelations } from "@/database/schemas";
 
 export async function getAppointmentById(appointmentId: string) {
   const appointment = await db.query.appointments.findFirst({

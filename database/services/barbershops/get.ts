@@ -3,7 +3,27 @@ import { CACHE_KEYS } from "@/constants/keys";
 import { db } from "@/database/config";
 import type { Barbershop } from "@/database/schemas";
 
-export async function getBarbershopByUuid(barbershopUuid: string) {
+export async function getBarbershopByUserId(userId: Barbershop["ownerId"]) {
+  const cachedBarbershop = await getCache<Barbershop>(
+    CACHE_KEYS.BARBERSHOP_BY_USER(userId),
+  );
+
+  if (cachedBarbershop) {
+    return cachedBarbershop;
+  }
+
+  const barbershop = await db.query.barbershops.findFirst({
+    where: (barbershops, { eq }) => eq(barbershops.ownerId, userId),
+  });
+
+  if (barbershop) {
+    await setCache(CACHE_KEYS.BARBERSHOP_BY_USER(userId), barbershop);
+  }
+
+  return barbershop;
+}
+
+export async function getBarbershopByUuid(barbershopUuid: Barbershop["uuid"]) {
   //   const cachedBarbershop = await getCache<BarbershopWithRelations>(
   //     CACHE_KEYS.BARBERSHOP(barbershopUuid),
   //   );

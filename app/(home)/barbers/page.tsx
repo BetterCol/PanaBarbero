@@ -5,8 +5,16 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { getBarbershops } from "@/database/services/barbershops/get";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 const Barbershops = async () => {
+  const user = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  console.log(user);
+
   const barbershops = await getBarbershops();
 
   return (

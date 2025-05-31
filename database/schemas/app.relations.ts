@@ -55,3 +55,15 @@ export const serviceRelations = relations(appSchemas.services, ({ one }) => ({
     references: [appSchemas.barbershops.id],
   }),
 }));
+
+export const userRelations = relations(authSchemas.user, ({ one, many }) => ({
+  barber: one(appSchemas.barbers, {
+    fields: [authSchemas.user.id],
+    references: [appSchemas.barbers.userId],
+  }),
+  barbershop: one(appSchemas.barbershops, {
+    fields: [authSchemas.user.id],
+    references: [appSchemas.barbershops.ownerId],
+  }),
+  appointments: many(appSchemas.appointments),
+}));

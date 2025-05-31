@@ -6,7 +6,12 @@ import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import { DASHBOARD_LINKS } from "@/constants/links";
 import { useSession } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
@@ -16,17 +21,25 @@ export const DesktopNavbar = () => {
 
   const { data } = useSession();
 
-  // @ts-expect-error
-  const links = DASHBOARD_LINKS[(data?.user?.role as keyof typeof DASHBOARD_LINKS) ?? "barber"];
+  console.log(data);
+
+  const links =
+    DASHBOARD_LINKS[
+      // @ts-expect-error
+      (data?.user?.role as keyof typeof DASHBOARD_LINKS) ?? "barber"
+    ];
 
   return (
-    <nav className="hidden h-14 w-full items-center border-y bg-card sm:flex">
-      <div className="mx-auto flex w-full max-w-[100rem] items-center justify-center border-l px-4 sm:justify-start sm:space-x-2 md:space-x-4">
+    <nav className="mx-auto hidden h-14 w-max items-center sm:flex">
+      <div className="mx-auto flex w-full max-w-[100rem] items-center justify-center px-4 sm:justify-start sm:space-x-2 md:space-x-4">
         {links.map((link) => (
           <ViewTransition name={link.href} key={link.href}>
-            <Button variant={pathname === link.href ? "outline" : "ghost"} asChild>
+            <Button
+              variant={pathname === link.href ? "outline" : "ghost"}
+              asChild
+            >
               <Link href={link.href}>
-                <link.icon className="hidden md:block" />
+                <link.icon className="hidden lg:block" />
                 {link.label}
               </Link>
             </Button>
@@ -42,8 +55,11 @@ export const MobileNavbar = () => {
 
   const { data } = useSession();
 
-  // @ts-expect-error
-  const links = DASHBOARD_LINKS[(data?.user?.role as keyof typeof DASHBOARD_LINKS) ?? "barber"];
+  const links =
+    DASHBOARD_LINKS[
+      // @ts-expect-error
+      (data?.user?.role as keyof typeof DASHBOARD_LINKS) ?? "barber"
+    ];
 
   return (
     <Drawer>

@@ -20,3 +20,9 @@ export const DASHBOARD_LINKS = {
 export const APP_LINKS = [
   { href: "/barbers", label: "Buscar barberos", icon: Search },
 ];
+
+export const REDIRECT_LINKS = {
+  barber: "/barber",
+  user: "/dashboard",
+  admin: "/admin",
+} as const;

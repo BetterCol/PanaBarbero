@@ -12,10 +12,15 @@ export const DashboardHeader = () => {
     <>
       <header className="flex h-15 w-full items-center justify-between bg-accent p-4">
         <div className="mx-auto flex w-full max-w-[100rem] items-center justify-between">
-          <Link href="/" className="text-balance font-semibold text-xl tracking-tighter">
+          <Link
+            href="/"
+            className="text-balance font-semibold text-xl tracking-tighter"
+          >
             PanaBarbero
           </Link>
-          <CommandDialog />
+          {/* <CommandDialog /> */}
+
+          <DesktopNavbar />
 
           <div className="flex items-center gap-2">
             <ThemeToggle />
@@ -26,7 +31,6 @@ export const DashboardHeader = () => {
           </div>
         </div>
       </header>
-      <DesktopNavbar />
     </>
   );
 };

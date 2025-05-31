@@ -1,16 +1,32 @@
 import { Suspense } from "react";
 
+import { redirect } from "next/navigation";
+
 import { HeaderAnalytics } from "@/components/barber/header-analytics";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { getAppointmentsByBarbershopId } from "@/database/services/appointments/get";
+import { getBarbershopByUserId } from "@/database/services/barbershops/get";
+import { getCurrentUser } from "@/lib/session";
 
 const BarberDashboard = async () => {
+  // const user = await getCurrentUser();
+
+  // console.log(user);
+
+  // if (!user) {
+  //   redirect("/login");
+  // }
+
+  // const barbershop = await getBarbershopByUserId(user.id);
+
+  // if (!barbershop) {
+  //   redirect("/barber/create");
+  // }
+
   const lastFiveAppointments = await getAppointmentsByBarbershopId(
     "01JWFWH0PN7WZ5KNYNBJT44JRJ",
     5,
   );
-
-  console.log(lastFiveAppointments);
 
   return (
     <div className="px-4 2xl:px-0">

@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EyeIcon, EyeOffIcon, KeyRound } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -22,6 +23,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { REDIRECT_LINKS } from "@/constants/links";
+import { clientEnv } from "@/env/client";
 import { oneTap, signIn } from "@/lib/auth-client";
 
 const loginSchema = object({
@@ -49,6 +52,7 @@ const loginSchema = object({
 
 export const LoginForm = () => {
   const [show, setShow] = useState<boolean>(false);
+  const [token, setToken] = useState<string | null>(null);
 
   const { push } = useRouter();
 
@@ -65,10 +69,12 @@ export const LoginForm = () => {
       email: data.email,
       password: data.password,
       rememberMe: true,
+      fetchOptions: {
+        headers: {
+          "x-captcha-response": token ?? "",
+        },
+      },
     });
-
-    console.log(login);
-    console.log(error);
 
     if (error) {
       toast.error(error.message ?? "Error al iniciar sesión");
@@ -83,7 +89,12 @@ export const LoginForm = () => {
 
     form.reset();
     form.clearErrors();
-    push("/dashboard");
+    push(
+      REDIRECT_LINKS[
+        // @ts-expect-error
+        (login.user?.role as keyof typeof REDIRECT_LINKS) ?? "user"
+      ],
+    );
   });
 
   useEffect(() => {
@@ -117,7 +128,16 @@ export const LoginForm = () => {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Contraseña</FormLabel>
+              <div className="flex items-center justify-between gap-2">
+                <FormLabel>Contraseña</FormLabel>
+
+                <Link
+                  href="/forgot-password"
+                  className="text-muted-foreground text-sm hover:text-primary hover:underline hover:underline-offset-2"
+                >
+                  Restaurar contraseña
+                </Link>
+              </div>
               <FormControl>
                 <div className="relative w-full">
                   <Input
@@ -129,11 +149,13 @@ export const LoginForm = () => {
                   />
                   <Button
                     type="button"
-                    className="absolute top-0.5 right-1"
+                    className="absolute top-0.5 right-0"
                     variant="ghost"
                     size="icon"
                     onClick={() => setShow(!show)}
-                    aria-label={show ? "Ocultar contraseña" : "Mostrar contraseña"}
+                    aria-label={
+                      show ? "Ocultar contraseña" : "Mostrar contraseña"
+                    }
                   >
                     {show ? <EyeOffIcon /> : <EyeIcon />}
                   </Button>
@@ -144,22 +166,25 @@ export const LoginForm = () => {
           )}
         />
 
-        <div className="flex flex-col-reverse items-start justify-between gap-6 sm:flex-row sm:items-center">
-          <Button asChild variant="destructive">
-            <Link href="/register">No tengo cuenta</Link>
-          </Button>
-
-          <div className="flex flex-row-reverse space-x-1 sm:flex-row">
-            <Button asChild variant="link">
-              <Link href="/forgot-password">Restaurar contraseña</Link>
-            </Button>
-
-            <Button isLoading={form.formState.isSubmitting}>
-              {form.formState.isSubmitting ? "Iniciando sesión..." : "Iniciar sesión"}
-            </Button>
+        {process.env.NODE_ENV === "production" && (
+          <div className="mx-auto max-w-max">
+            <HCaptcha
+              sitekey={clientEnv.NEXT_PUBLIC_HCAPTCHA_SITE_KEY}
+              onVerify={setToken}
+            />
           </div>
+        )}
+
+        <div className="flex flex-col-reverse items-start justify-between gap-6 sm:flex-row sm:items-center">
+          <Button isLoading={form.formState.isSubmitting} fullWidth>
+            {form.formState.isSubmitting
+              ? "Iniciando sesión..."
+              : "Iniciar sesión"}
+          </Button>
         </div>
+
         <Separator className="my-4" />
+
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Button
             variant="outline"
@@ -175,6 +200,14 @@ export const LoginForm = () => {
           <Button variant="outline" type="button">
             <KeyRound />
             Passkey
+          </Button>
+        </div>
+
+        <Separator className="my-4" />
+
+        <div className="mx-auto max-w-max">
+          <Button asChild variant="link-neutral">
+            <Link href="/register">No tengo cuenta</Link>
           </Button>
         </div>
       </form>

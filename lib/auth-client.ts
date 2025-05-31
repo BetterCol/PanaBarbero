@@ -1,5 +1,3 @@
-"use client";
-
 import {
   inferAdditionalFields,
   oneTapClient,
@@ -9,13 +7,13 @@ import {
 import { createAuthClient } from "better-auth/react";
 import { toast } from "sonner";
 
+import { clientEnv } from "@/env/client";
 import type { auth } from "./auth";
 
 export const authClient = createAuthClient({
-  baseURL: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
   plugins: [
     oneTapClient({
-      clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
+      clientId: clientEnv.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
     }),
     passkeyClient(),
     twoFactorClient(),
@@ -41,4 +39,5 @@ export const authClient = createAuthClient({
   },
 });
 
-export const { signIn, signUp, signOut, useSession, getSession, oneTap } = authClient;
+export const { signIn, signUp, signOut, useSession, getSession, oneTap } =
+  authClient;
