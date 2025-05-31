@@ -1,5 +1,3 @@
-import { unstable_ViewTransition as ViewTransition } from "react";
-
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -33,17 +31,16 @@ export const DesktopNavbar = () => {
     <nav className="mx-auto hidden h-14 w-max items-center sm:flex">
       <div className="mx-auto flex w-full max-w-[100rem] items-center justify-center px-4 sm:justify-start sm:space-x-2 md:space-x-4">
         {links.map((link) => (
-          <ViewTransition name={link.href} key={link.href}>
-            <Button
-              variant={pathname === link.href ? "outline" : "ghost"}
-              asChild
-            >
-              <Link href={link.href}>
-                <link.icon className="hidden lg:block" />
-                {link.label}
-              </Link>
-            </Button>
-          </ViewTransition>
+          <Button
+            key={link.href}
+            variant={pathname === link.href ? "outline" : "ghost"}
+            asChild
+          >
+            <Link href={link.href}>
+              <link.icon className="hidden lg:block" />
+              {link.label}
+            </Link>
+          </Button>
         ))}
       </div>
     </nav>
@@ -70,22 +67,20 @@ export const MobileNavbar = () => {
       </DrawerTrigger>
       <DrawerContent className="space-y-2 pr-4 pb-4">
         {links.map((link) => (
-          <ViewTransition key={link.href} name={link.href}>
-            <DrawerClose className="mr-auto w-full">
-              <Button
-                variant="ghost"
-                className={cn("w-full justify-start", {
-                  "ml-2 w-full border-l bg-accent": pathname === link.href,
-                })}
-                asChild
-              >
-                <Link href={link.href}>
-                  <link.icon />
-                  {link.label}
-                </Link>
-              </Button>
-            </DrawerClose>
-          </ViewTransition>
+          <DrawerClose className="mr-auto w-full" key={link.href}>
+            <Button
+              variant="ghost"
+              className={cn("w-full justify-start", {
+                "ml-2 w-full border-l bg-accent": pathname === link.href,
+              })}
+              asChild
+            >
+              <Link href={link.href}>
+                <link.icon />
+                {link.label}
+              </Link>
+            </Button>
+          </DrawerClose>
         ))}
       </DrawerContent>
     </Drawer>
