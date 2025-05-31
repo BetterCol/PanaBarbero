@@ -67,12 +67,10 @@ const baseColumns = {
   uuid: uuid()
     .notNull()
     .$defaultFn(() => crypto.randomUUID()),
-  createdAt: timestamp()
-    .notNull()
-    .$defaultFn(() => new Date()),
+  createdAt: timestamp().notNull().defaultNow(),
   updatedAt: timestamp()
     .notNull()
-    .$defaultFn(() => new Date())
+    .defaultNow()
     .$onUpdateFn(() => new Date()),
 };
 

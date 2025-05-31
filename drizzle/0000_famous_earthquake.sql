@@ -9,8 +9,8 @@ CREATE TABLE "appointments" (
 	"status" "appintment_status" DEFAULT 'created' NOT NULL,
 	"id" text PRIMARY KEY NOT NULL,
 	"uuid" uuid NOT NULL,
-	"created_at" timestamp NOT NULL,
-	"updated_at" timestamp NOT NULL
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "barbers" (
@@ -20,8 +20,8 @@ CREATE TABLE "barbers" (
 	"barbershop_id" text NOT NULL,
 	"id" text PRIMARY KEY NOT NULL,
 	"uuid" uuid NOT NULL,
-	"created_at" timestamp NOT NULL,
-	"updated_at" timestamp NOT NULL
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "barbershops" (
@@ -36,8 +36,8 @@ CREATE TABLE "barbershops" (
 	"owner_id" text NOT NULL,
 	"id" text PRIMARY KEY NOT NULL,
 	"uuid" uuid NOT NULL,
-	"created_at" timestamp NOT NULL,
-	"updated_at" timestamp NOT NULL
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "services" (
@@ -48,8 +48,8 @@ CREATE TABLE "services" (
 	"barbershop_id" text NOT NULL,
 	"id" text PRIMARY KEY NOT NULL,
 	"uuid" uuid NOT NULL,
-	"created_at" timestamp NOT NULL,
-	"updated_at" timestamp NOT NULL
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "account" (
@@ -79,6 +79,18 @@ CREATE TABLE "passkey" (
 	"backed_up" boolean NOT NULL,
 	"transports" text,
 	"created_at" timestamp
+);
+--> statement-breakpoint
+CREATE TABLE "session" (
+	"id" text PRIMARY KEY NOT NULL,
+	"expires_at" timestamp NOT NULL,
+	"token" text NOT NULL,
+	"created_at" timestamp NOT NULL,
+	"updated_at" timestamp NOT NULL,
+	"ip_address" text,
+	"user_agent" text,
+	"user_id" text NOT NULL,
+	CONSTRAINT "session_token_unique" UNIQUE("token")
 );
 --> statement-breakpoint
 CREATE TABLE "two_factor" (
@@ -120,6 +132,7 @@ ALTER TABLE "barbershops" ADD CONSTRAINT "barbershops_owner_id_user_id_fk" FOREI
 ALTER TABLE "services" ADD CONSTRAINT "services_barbershop_id_barbershops_id_fk" FOREIGN KEY ("barbershop_id") REFERENCES "public"."barbershops"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "account" ADD CONSTRAINT "account_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "passkey" ADD CONSTRAINT "passkey_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "session" ADD CONSTRAINT "session_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "two_factor" ADD CONSTRAINT "two_factor_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 CREATE INDEX "appointments_barbershopId_idx" ON "appointments" USING btree ("barbershop_id");--> statement-breakpoint
 CREATE INDEX "appointments_barberId_idx" ON "appointments" USING btree ("barber_id");--> statement-breakpoint

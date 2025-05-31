@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1748719237437,
-      "tag": "0000_omniscient_peter_parker",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1748725063704,
-      "tag": "0001_sturdy_beast",
+      "when": 1748732697686,
+      "tag": "0000_famous_earthquake",
       "breakpoints": true
     }
   ]
