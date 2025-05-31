@@ -1,5 +1,3 @@
-import { useRouter } from "next/navigation";
-
 import { LogOutIcon } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -12,28 +10,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { signOut, useSession } from "@/lib/auth-client";
-import { useMemo } from "react";
 
 export const UserDropdown = () => {
-  const { push } = useRouter();
-  const { data } = useSession();
-
-  const initials = data?.user?.name
-    ? data.user.name
-        .split(" ")
-        .map((name) => name.charAt(0).toUpperCase())
-        .join("")
-    : "N/A";
-
-  const memoRandomImage = useMemo(() => {
-    if (data?.user?.image) {
-      return data.user.image;
-    }
-
-    return "https://avatar.iran.liara.run/public";
-  }, [data?.user]);
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -43,14 +21,12 @@ export const UserDropdown = () => {
         >
           <Avatar className="size-6">
             <AvatarImage
-              src={memoRandomImage}
-              alt={data?.user?.name ?? "Foto de perfil"}
+              src="https://github.com/shadcn.png"
+              alt="User Avatar"
             />
-            <AvatarFallback className="text-xs">{initials}</AvatarFallback>
+            <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-          <span className="hidden md:inline-flex">
-            {data?.user?.name ?? "Usuario"}
-          </span>
+          <span className="hidden md:inline-flex">Andres Rodriguez</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
@@ -66,18 +42,7 @@ export const UserDropdown = () => {
         <DropdownMenuItem>Team</DropdownMenuItem>
         <DropdownMenuItem>Subscription</DropdownMenuItem>
         <DropdownMenuItem>
-          <Button
-            variant="destructive"
-            onClick={() =>
-              signOut({
-                fetchOptions: {
-                  onSuccess: () => {
-                    push("/login");
-                  },
-                },
-              })
-            }
-          >
+          <Button variant="destructive">
             <LogOutIcon className="text-primary-foreground" />
             <span>Cerrar sesión</span>
           </Button>

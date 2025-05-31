@@ -1,4 +1,11 @@
-import { Calendar, Home, Scissors, Settings, Store } from "lucide-react";
+import {
+  Calendar,
+  Home,
+  Scissors,
+  Search,
+  Settings,
+  Store,
+} from "lucide-react";
 
 export const DASHBOARD_LINKS = {
   barber: [
@@ -9,3 +16,13 @@ export const DASHBOARD_LINKS = {
     { href: "/barber/settings", label: "Ajustes", icon: Settings },
   ],
 };
+
+export const APP_LINKS = [
+  { href: "/barbers", label: "Buscar barberos", icon: Search },
+];
+
+export const REDIRECT_LINKS = {
+  barber: "/barber",
+  user: "/dashboard",
+  admin: "/admin",
+} as const;

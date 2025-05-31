@@ -3,22 +3,20 @@
 import Link from "next/link";
 
 import { ThemeToggle } from "@/components/theme-toggle";
-import { CommandDialog } from "./command-dialog";
-import { DesktopNavbar, MobileNavbar } from "./navbar";
+import { DesktopNavbar, MobileNavbar } from "./menu";
 import { UserDropdown } from "./user-dropdown";
 
-export const DashboardHeader = () => {
+export const HomeHeader = () => {
   return (
     <>
-      <header className="flex h-15 w-full items-center justify-between bg-accent p-4">
+      <header className="flex h-15 w-full items-center justify-between bg-card p-4">
         <div className="mx-auto flex w-full max-w-[100rem] items-center justify-between">
           <Link
             href="/"
-            className="text-balance font-semibold text-xl tracking-tighter"
+            className="text-balance rounded-md border bg-card px-3 py-1 font-semibold text-xl tracking-tighter"
           >
             PanaBarbero
           </Link>
-          {/* <CommandDialog /> */}
 
           <DesktopNavbar />
 

@@ -10,32 +10,15 @@ import {
   DrawerContent,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { DASHBOARD_LINKS } from "@/constants/links";
-import { useSession } from "@/lib/auth-client";
+import { APP_LINKS } from "@/constants/links";
 import { cn } from "@/lib/utils";
 
 export const DesktopNavbar = () => {
-  const pathname = usePathname();
-
-  const { data } = useSession();
-
-  console.log(data);
-
-  const links =
-    DASHBOARD_LINKS[
-      // @ts-expect-error
-      (data?.user?.role as keyof typeof DASHBOARD_LINKS) ?? "barber"
-    ];
-
   return (
-    <nav className="mx-auto hidden h-14 w-max items-center sm:flex">
-      <div className="mx-auto flex w-full max-w-[100rem] items-center justify-center px-4 sm:justify-start sm:space-x-2 md:space-x-4">
-        {links.map((link) => (
-          <Button
-            key={link.href}
-            variant={pathname === link.href ? "outline" : "ghost"}
-            asChild
-          >
+    <nav className="hidden h-14 w-max items-center sm:flex">
+      <div className="mx-auto flex w-full max-w-[100rem] items-center justify-center sm:justify-start sm:space-x-2 md:space-x-4">
+        {APP_LINKS.map((link) => (
+          <Button key={link.href} variant="ghost" asChild>
             <Link href={link.href}>
               <link.icon className="hidden lg:block" />
               {link.label}
@@ -50,14 +33,6 @@ export const DesktopNavbar = () => {
 export const MobileNavbar = () => {
   const pathname = usePathname();
 
-  const { data } = useSession();
-
-  const links =
-    DASHBOARD_LINKS[
-      // @ts-expect-error
-      (data?.user?.role as keyof typeof DASHBOARD_LINKS) ?? "barber"
-    ];
-
   return (
     <Drawer>
       <DrawerTrigger asChild>
@@ -66,8 +41,8 @@ export const MobileNavbar = () => {
         </Button>
       </DrawerTrigger>
       <DrawerContent className="space-y-2 pr-4 pb-4">
-        {links.map((link) => (
-          <DrawerClose className="mr-auto w-full" key={link.href}>
+        {APP_LINKS.map((link) => (
+          <DrawerClose key={link.href} className="mr-auto w-full">
             <Button
               variant="ghost"
               className={cn("w-full justify-start", {

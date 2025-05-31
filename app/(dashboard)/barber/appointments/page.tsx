@@ -1,17 +1,42 @@
+import { Suspense } from "react";
+
+import dynamic from "next/dynamic";
+
 import { columns } from "@/components/barber/appointments/columns";
 import { AppointmentsTable } from "@/components/barber/appointments/data-table";
-import { data } from "@/components/barber/appointments/utils";
 import { Card, CardContent } from "@/components/ui/card";
-import { AppointmentsCardHeader, CalendarClient } from "./page.client";
+import { Paragraph } from "@/components/ui/typography";
+import { getAppointmentsByBarbershopId } from "@/database/services/appointments/get";
 
-const Appointments = () => {
+const CalendarClient = dynamic(() =>
+  import("./_components/calendar").then((mod) => mod.CalendarClient),
+);
+const AppointmentsCardHeader = dynamic(() =>
+  import("./_components/card-header").then((mod) => mod.AppointmentsCardHeader),
+);
+
+const Appointments = async () => {
+  const appointments = await getAppointmentsByBarbershopId(
+    "01JWFWH0PN7WZ5KNYNBJT44JRJ",
+  );
+
   return (
     <div className="grid w-full grid-cols-1 place-items-start gap-4 px-2 md:grid-cols-3 md:gap-8 lg:grid-cols-5 xl:grid-cols-6 2xl:px-0">
       <CalendarClient />
+
       <Card className="col-span-1 mx-auto min-h-[18.4rem] w-full md:col-span-2 lg:col-span-4 lg:max-w-[42rem] xl:col-span-5 xl:max-w-4xl 2xl:max-w-full">
         <AppointmentsCardHeader />
+
         <CardContent>
-          <AppointmentsTable columns={columns} data={data} />
+          <Suspense
+            fallback={
+              <div className="flex min-h-96 w-full items-center justify-center rounded-xl bg-muted">
+                <Paragraph>Cargando...</Paragraph>
+              </div>
+            }
+          >
+            <AppointmentsTable columns={columns} data={appointments} />
+          </Suspense>
         </CardContent>
       </Card>
     </div>
