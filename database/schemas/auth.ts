@@ -20,6 +20,8 @@ export const user = pgTable("user", {
   role: userRole().notNull().default(ROLES.USER),
 });
 
+export type User = typeof user.$inferSelect;
+
 export const account = pgTable("account", {
   id: text("id").primaryKey(),
   accountId: text("account_id").notNull(),

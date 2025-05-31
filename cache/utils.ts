@@ -1,17 +1,20 @@
-const client = new Bun.RedisClient(process.env.REDIS_URL!);
+import { Redis } from "@upstash/redis";
 
-export const getCache = async <T>(key: string): Promise<T | null> => {
-  const value = await client.get(key);
+const client = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL ?? "",
+  token: process.env.UPSTASH_REDIS_REST_TOKEN ?? "",
+});
 
-  if (!value) return null;
+export const getCache = async <T>(key: string) => {
+  const value = (await client.get(key)) as unknown as string;
 
-  const parsedValue = JSON.parse(value) as T;
-
-  return parsedValue;
+  return value as T;
 };
 
-export const setCache = async (key: string, value: unknown, ttl: number | undefined) => {
-  await client.set(key, JSON.stringify(value), "EX", ttl ?? 60 * 60);
+export const setCache = async (key: string, value: unknown, ttl?: number) => {
+  await client.set(key, JSON.stringify(value), {
+    ex: ttl ?? 60 * 60,
+  });
 };
 
 export const deleteCache = async (key: string) => {

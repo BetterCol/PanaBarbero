@@ -64,7 +64,7 @@ export const AppointmentsTable = <TData, TValue>({
 
   return (
     <>
-      <div className="rounded-md border">
+      <div className="rounded-lg">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

@@ -8,6 +8,20 @@
       "when": 1748353620388,
       "tag": "0000_lazy_zarda",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1748584561985,
+      "tag": "0001_nasty_mysterio",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1748584981223,
+      "tag": "0002_slippery_moonstone",
+      "breakpoints": true
     }
   ]
 }
