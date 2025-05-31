@@ -8,7 +8,7 @@ const client = new Redis({
 export const getCache = async <T>(key: string) => {
   const value = (await client.get(key)) as unknown as string;
 
-  return JSON.parse(value) as T | null;
+  return value as T;
 };
 
 export const setCache = async (key: string, value: unknown, ttl?: number) => {

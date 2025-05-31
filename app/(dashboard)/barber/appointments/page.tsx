@@ -16,7 +16,9 @@ const AppointmentsCardHeader = dynamic(() =>
 );
 
 const Appointments = async () => {
-  const appointments = await getAppointmentsByBarbershopId("01JWFWH0PN7WZ5KNYNBJT44JRJ");
+  const appointments = await getAppointmentsByBarbershopId(
+    "01JWFWH0PN7WZ5KNYNBJT44JRJ",
+  );
 
   return (
     <div className="grid w-full grid-cols-1 place-items-start gap-4 px-2 md:grid-cols-3 md:gap-8 lg:grid-cols-5 xl:grid-cols-6 2xl:px-0">

@@ -1,6 +1,11 @@
 import { getCache, setCache } from "@/cache/utils";
 import { CACHE_KEYS } from "@/constants/keys";
 import { db } from "@/database/config";
+import {
+  type AppointmentWithRelations,
+  appointments as appointmentsTable,
+  user,
+} from "@/database/schemas";
 
 export async function getAppointmentById(appointmentId: string) {
   const appointment = await db.query.appointments.findFirst({
@@ -28,12 +33,26 @@ export async function getAppointmentById(appointmentId: string) {
   return appointment;
 }
 
-export async function getAppointmentsByBarbershopId(barbershopId: string, limit = 10) {
+export async function getAppointmentsByBarbershopId(
+  barbershopId: string,
+  limit = 10,
+) {
+  const cachedAppointments = await getCache<AppointmentWithRelations[]>(
+    CACHE_KEYS.APPOINTMENTS_BY_BARBERSHOP(barbershopId),
+  );
+
+  if (cachedAppointments) {
+    return cachedAppointments;
+  }
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
   const appointments = await db.query.appointments.findMany({
-    where: (appointments, { eq, and }) =>
+    where: (appointments, { eq, and, gte }) =>
       and(
         eq(appointments.barbershopId, barbershopId),
-        eq(appointments.appointmentDate, new Date()),
+        gte(appointments.appointmentDate, today),
       ),
     with: {
       customer: {
@@ -53,7 +72,10 @@ export async function getAppointmentsByBarbershopId(barbershopId: string, limit 
   });
 
   if (appointments.length > 0) {
-    await setCache(CACHE_KEYS.APPOINTMENTS_BY_BARBERSHOP(barbershopId), appointments);
+    await setCache(
+      CACHE_KEYS.APPOINTMENTS_BY_BARBERSHOP(barbershopId),
+      appointments,
+    );
   }
 
   return appointments;

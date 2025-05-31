@@ -1,9 +1,23 @@
-import { index, integer, jsonb, pgEnum, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import {
+  index,
+  integer,
+  jsonb,
+  pgEnum,
+  pgTable,
+  text,
+  timestamp,
+  uuid,
+} from "drizzle-orm/pg-core";
 import { ulid } from "ulid";
 
 import * as authSchemas from "./auth";
 
-export type Platform = "facebook" | "instagram" | "twitter" | "youtube" | "tiktok";
+export type Platform =
+  | "facebook"
+  | "instagram"
+  | "twitter"
+  | "youtube"
+  | "tiktok";
 
 export type SocialMedia = {
   [MediaPlatform in Platform]: string | null;
@@ -17,15 +31,17 @@ export const APPOINTMENT_STATUS = {
   RESCHEDULED: "rescheduled",
 } as const;
 
-export type AppointmentStatus = (typeof APPOINTMENT_STATUS)[keyof typeof APPOINTMENT_STATUS];
+export type AppointmentStatus =
+  (typeof APPOINTMENT_STATUS)[keyof typeof APPOINTMENT_STATUS];
 
-export const TRANSLATED_APPOINTMENT_STATUS: Record<AppointmentStatus, string> = {
-  [APPOINTMENT_STATUS.CREATED]: "Creado",
-  [APPOINTMENT_STATUS.COMPLETED]: "Completado",
-  [APPOINTMENT_STATUS.CANCELLED]: "Cancelado",
-  [APPOINTMENT_STATUS.NO_SHOW]: "No asistió",
-  [APPOINTMENT_STATUS.RESCHEDULED]: "Reprogramado",
-};
+export const TRANSLATED_APPOINTMENT_STATUS: Record<AppointmentStatus, string> =
+  {
+    [APPOINTMENT_STATUS.CREATED]: "Creado",
+    [APPOINTMENT_STATUS.COMPLETED]: "Completado",
+    [APPOINTMENT_STATUS.CANCELLED]: "Cancelado",
+    [APPOINTMENT_STATUS.NO_SHOW]: "No asistió",
+    [APPOINTMENT_STATUS.RESCHEDULED]: "Reprogramado",
+  };
 
 export const appointmentStatusEnum = pgEnum("appintment_status", [
   APPOINTMENT_STATUS.CREATED,
@@ -85,6 +101,9 @@ export const barbershops = pgTable(
   (table) => [index("barbershops_ownerId_idx").on(table.ownerId)],
 );
 
+export type Barbershop = typeof barbershops.$inferSelect;
+export type BarbershopInsert = typeof barbershops.$inferInsert;
+
 export const services = pgTable("services", {
   name: text().notNull(),
   description: text(),
@@ -120,6 +139,6 @@ export const appointments = pgTable("appointments", {
 export type Appointment = typeof appointments.$inferSelect;
 export type AppointmentInsert = typeof appointments.$inferInsert;
 export type AppointmentWithRelations = Appointment & {
-  customer: authSchemas.User;
-  service: Service;
+  customer: Pick<authSchemas.User, "id" | "name">;
+  service: Pick<Service, "id" | "name">;
 };

@@ -6,7 +6,6 @@ import Link from "next/link";
 
 import { ArrowRight, Book, Calendar, DollarSign } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -26,12 +25,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Paragraph } from "@/components/ui/typography";
-import type { Appointment } from "@/database/schemas";
-import { TRANSLATED_APPOINTMENT_STATUS } from "@/database/schemas";
-import { getBadgeVariant } from "./appointments/utils";
+import type { AppointmentWithRelations } from "@/database/schemas";
 
 interface HeaderAnalyticsProps {
-  appointments: Appointment[];
+  appointments: AppointmentWithRelations[];
 }
 
 export const HeaderAnalytics: FC<HeaderAnalyticsProps> = ({ appointments }) => {
@@ -40,7 +37,9 @@ export const HeaderAnalytics: FC<HeaderAnalyticsProps> = ({ appointments }) => {
       <div className="col-span-3 grid w-full gap-4 sm:col-span-2">
         <Card className="mx-auto w-full">
           <CardHeader>
-            <CardTitle className="text-muted-foreground">Reservaciones</CardTitle>
+            <CardTitle className="text-muted-foreground">
+              Reservaciones
+            </CardTitle>
             <CardAction>
               <Book className="size-4" />
             </CardAction>
@@ -61,7 +60,9 @@ export const HeaderAnalytics: FC<HeaderAnalyticsProps> = ({ appointments }) => {
         </Card>
         <Card className="mx-auto w-full">
           <CardHeader>
-            <CardTitle className="text-muted-foreground">Ingresos estimados</CardTitle>
+            <CardTitle className="text-muted-foreground">
+              Ingresos estimados
+            </CardTitle>
             <CardAction>
               <DollarSign className="size-4" />
             </CardAction>
@@ -85,48 +86,51 @@ export const HeaderAnalytics: FC<HeaderAnalyticsProps> = ({ appointments }) => {
       </div>
       <Card className="col-span-3 w-full sm:col-span-2 md:min-h-[23.9rem]">
         <CardHeader>
-          <CardTitle className="text-muted-foreground">Próximas citas</CardTitle>
+          <CardTitle className="text-muted-foreground">
+            Próximas citas
+          </CardTitle>
           <CardAction>
             <Calendar className="size-4" />
           </CardAction>
         </CardHeader>
         <CardContent>
           <Table>
-            <TableCaption>Tus citas mas recientes (limite de 5 citas).</TableCaption>
+            <TableCaption>
+              Tus citas mas recientes (limite de 5 citas).
+            </TableCaption>
             <TableHeader>
               <TableRow>
                 <TableHead>Fecha</TableHead>
-                <TableHead className="text-center">Estado</TableHead>
                 <TableHead className="text-center">Servicio</TableHead>
                 <TableHead className="text-right">Hora de reserva</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {appointments.map((appointment) => {
-                const variant = getBadgeVariant(appointment.status);
-                const statusLabel = TRANSLATED_APPOINTMENT_STATUS[appointment.status];
-
                 return (
                   <TableRow key={appointment.uuid}>
                     <TableCell>
-                      {appointment.appointmentDate.toLocaleDateString("es-CO", {
-                        weekday: "long",
-                        month: "2-digit",
-                        day: "numeric",
-                      })}
+                      {new Date(appointment.appointmentDate).toLocaleDateString(
+                        "es-CO",
+                        {
+                          weekday: "long",
+                          month: "2-digit",
+                          day: "numeric",
+                        },
+                      )}
                     </TableCell>
                     <TableCell className="text-center">
-                      <Badge variant={variant} className="rounded-full">
-                        {statusLabel}
-                      </Badge>
+                      {appointment.service.name}
                     </TableCell>
-                    <TableCell className="text-center">{appointment.serviceId}</TableCell>
                     <TableCell className="text-right">
-                      {appointment.appointmentDate.toLocaleTimeString("es-CO", {
-                        hour12: true,
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
+                      {new Date(appointment.appointmentDate).toLocaleTimeString(
+                        "es-CO",
+                        {
+                          hour12: true,
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        },
+                      )}
                     </TableCell>
                   </TableRow>
                 );
