@@ -10,36 +10,47 @@ import {
   DrawerContent,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { DASHBOARD_LINKS } from "@/constants/links";
+import { Skeleton } from "@/components/ui/skeleton";
+import { APP_LINKS, DASHBOARD_LINKS } from "@/constants/links";
 import { useSession } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 
 export const DesktopNavbar = () => {
   const pathname = usePathname();
 
-  const { data } = useSession();
+  const { data, isPending } = useSession();
 
-  const links =
-    DASHBOARD_LINKS[
-      // @ts-expect-error
-      (data?.user?.role as keyof typeof DASHBOARD_LINKS) ?? "user"
-    ];
+  const links = data?.user
+    ? DASHBOARD_LINKS[
+        // @ts-expect-error
+        (data?.user?.role as keyof typeof DASHBOARD_LINKS) ?? "user"
+      ]
+    : APP_LINKS;
 
   return (
     <nav className="mx-auto hidden h-14 w-max items-center sm:flex">
       <div className="mx-auto flex w-full max-w-[100rem] items-center justify-center px-4 sm:justify-start sm:space-x-2 md:space-x-4">
-        {links.map((link) => (
-          <Button
-            key={link.href}
-            variant={pathname === link.href ? "outline" : "ghost"}
-            asChild
-          >
-            <Link href={link.href}>
-              <link.icon className="hidden lg:block" />
-              {link.label}
-            </Link>
-          </Button>
-        ))}
+        {isPending ? (
+          <div className="flex items-center gap-8">
+            <Skeleton className="h-8 w-24" />
+            <Skeleton className="h-8 w-24" />
+            <Skeleton className="h-8 w-24" />
+            <Skeleton className="h-8 w-24" />
+          </div>
+        ) : (
+          links.map((link) => (
+            <Button
+              key={link.href}
+              variant={pathname === link.href ? "outline" : "ghost"}
+              asChild
+            >
+              <Link href={link.href}>
+                <link.icon className="hidden lg:block" />
+                {link.label}
+              </Link>
+            </Button>
+          ))
+        )}
       </div>
     </nav>
   );
@@ -50,11 +61,12 @@ export const MobileNavbar = () => {
 
   const { data } = useSession();
 
-  const links =
-    DASHBOARD_LINKS[
-      // @ts-expect-error
-      (data?.user?.role as keyof typeof DASHBOARD_LINKS) ?? "user"
-    ];
+  const links = data?.user
+    ? DASHBOARD_LINKS[
+        // @ts-expect-error
+        (data?.user?.role as keyof typeof DASHBOARD_LINKS) ?? "user"
+      ]
+    : APP_LINKS;
 
   return (
     <Drawer>

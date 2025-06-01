@@ -13,10 +13,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { signOut, useSession } from "@/lib/auth-client";
-import { useMemo } from "react";
 
 export const UserDropdown = () => {
   const { push } = useRouter();
+
   const { data } = useSession();
 
   const initials = data?.user?.name
@@ -26,13 +26,9 @@ export const UserDropdown = () => {
         .join("")
     : "N/A";
 
-  const memoRandomImage = useMemo(() => {
-    if (data?.user?.image) {
-      return data.user.image;
-    }
-
-    return "https://avatar.iran.liara.run/public";
-  }, [data?.user]);
+  const memoRandomImage = data?.user?.image
+    ? data.user.image
+    : "https://avatar.iran.liara.run/public";
 
   return (
     <DropdownMenu>
@@ -48,14 +44,12 @@ export const UserDropdown = () => {
             />
             <AvatarFallback className="text-xs">{initials}</AvatarFallback>
           </Avatar>
-          <span className="hidden md:inline-flex">
-            {data?.user?.name ?? "Usuario"}
-          </span>
+          <span className="hidden md:inline-flex">{data?.user?.name}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel className="md:hidden">
-          Andres Rodriguez
+          {data?.user?.name}
         </DropdownMenuLabel>
         <DropdownMenuLabel className="hidden md:inline-flex">
           Mi cuenta
@@ -65,23 +59,25 @@ export const UserDropdown = () => {
         <DropdownMenuItem>Billing</DropdownMenuItem>
         <DropdownMenuItem>Team</DropdownMenuItem>
         <DropdownMenuItem>Subscription</DropdownMenuItem>
-        <DropdownMenuItem>
-          <Button
-            variant="destructive"
-            onClick={() =>
-              signOut({
-                fetchOptions: {
-                  onSuccess: () => {
-                    push("/login");
+        {data?.user && (
+          <DropdownMenuItem>
+            <Button
+              variant="destructive"
+              onClick={() =>
+                signOut({
+                  fetchOptions: {
+                    onSuccess: () => {
+                      push("/login");
+                    },
                   },
-                },
-              })
-            }
-          >
-            <LogOutIcon className="text-primary-foreground" />
-            <span>Cerrar sesión</span>
-          </Button>
-        </DropdownMenuItem>
+                })
+              }
+            >
+              <LogOutIcon className="text-primary-foreground" />
+              <span>Cerrar sesión</span>
+            </Button>
+          </DropdownMenuItem>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

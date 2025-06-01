@@ -1,12 +1,12 @@
 import type { FC, PropsWithChildren } from "react";
 
 import { DashboardContainer } from "@/components/layout/dashboard/container";
-import { DashboardHeader } from "@/components/layout/dashboard/header";
+import { Header } from "@/components/layout/navbar";
 
 const DashboardLayout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <main className="min-h-dvh">
-      <DashboardHeader />
+      <Header />
       <DashboardContainer>{children}</DashboardContainer>
     </main>
   );

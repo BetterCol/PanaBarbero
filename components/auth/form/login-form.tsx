@@ -170,7 +170,6 @@ export const LoginForm = () => {
           <HCaptcha
             sitekey={clientEnv.NEXT_PUBLIC_HCAPTCHA_SITE_KEY}
             onVerify={setToken}
-            size="invisible"
           />
         </div>
 

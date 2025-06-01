@@ -1,11 +1,11 @@
 import type { FC, PropsWithChildren } from "react";
 
-import { HomeHeader } from "@/components/layout/home/navbar";
+import { Header } from "@/components/layout/navbar";
 
 const HomeLayout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <div>
-      <HomeHeader />
+      <Header />
       {children}
     </div>
   );

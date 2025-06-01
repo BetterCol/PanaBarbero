@@ -32,3 +32,25 @@ export const REDIRECT_LINKS = {
   user: "/dashboard",
   admin: "/admin",
 } as const;
+
+export type RedirectLink = (typeof REDIRECT_LINKS)[keyof typeof REDIRECT_LINKS];
+
+export const PRIVATE_LINKS = {
+  barber: [
+    "/barber",
+    "/barber/appointments",
+    "/barber/services",
+    "/barber/my-barbershop",
+    "/barber/settings",
+  ],
+  user: [
+    "/dashboard",
+    "/dashboard/appointments",
+    "/dashboard/barbers",
+    "/dashboard/settings",
+  ],
+  admin: ["/admin", "/admin/users", "/admin/barbers", "/admin/settings"],
+} as const;
+
+export type PrivateLink =
+  (typeof PRIVATE_LINKS)[keyof typeof PRIVATE_LINKS][number];
