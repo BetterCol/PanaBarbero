@@ -5,6 +5,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -21,6 +22,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { clientEnv } from "@/env/client";
 import { signUp } from "@/lib/auth-client";
 
 const registerSchema = object({
@@ -57,7 +59,8 @@ const registerSchema = object({
       message: "La contraseña no puede tener más de 100 caracteres",
     }),
   confirmPassword: string({
-    invalid_type_error: "La confirmación de contraseña debe ser una cadena de texto",
+    invalid_type_error:
+      "La confirmación de contraseña debe ser una cadena de texto",
     required_error: "La confirmación de contraseña es obligatoria",
     message: "La confirmación de contraseña es obligatoria",
   })
@@ -65,7 +68,8 @@ const registerSchema = object({
       message: "La confirmación de contraseña debe tener al menos 6 caracteres",
     })
     .max(100, {
-      message: "La confirmación de contraseña no puede tener más de 100 caracteres",
+      message:
+        "La confirmación de contraseña no puede tener más de 100 caracteres",
     }),
 }).refine(({ password, confirmPassword }) => password === confirmPassword, {
   message: "Las contraseñas no coinciden",
@@ -73,6 +77,7 @@ const registerSchema = object({
 });
 
 export const RegisterForm = () => {
+  const [token, setToken] = useState<string | null>(null);
   const [showFirst, setShowFirst] = useState<boolean>(false);
   const [showSecond, setShowSecond] = useState<boolean>(false);
 
@@ -93,6 +98,11 @@ export const RegisterForm = () => {
       email: data.email,
       password: data.password,
       name: data.name,
+      fetchOptions: {
+        headers: {
+          "x-captcha-response": token ?? "",
+        },
+      },
     });
 
     if (error) {
@@ -117,7 +127,11 @@ export const RegisterForm = () => {
             <FormItem>
               <FormLabel>Nombre</FormLabel>
               <FormControl>
-                <Input placeholder="Juan Pérez" autoComplete="name" {...field} />
+                <Input
+                  placeholder="Juan Pérez"
+                  autoComplete="name"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -160,11 +174,13 @@ export const RegisterForm = () => {
                     />
                     <Button
                       type="button"
-                      className="absolute top-0.5 right-1"
+                      className="absolute top-0.5 right-0"
                       variant="ghost"
                       size="icon"
                       onClick={() => setShowFirst(!showFirst)}
-                      aria-label={showFirst ? "Ocultar contraseña" : "Mostrar contraseña"}
+                      aria-label={
+                        showFirst ? "Ocultar contraseña" : "Mostrar contraseña"
+                      }
                     >
                       {showFirst ? <EyeOffIcon /> : <EyeIcon />}
                     </Button>
@@ -191,11 +207,13 @@ export const RegisterForm = () => {
                     />
                     <Button
                       type="button"
-                      className="absolute top-0.5 right-1"
+                      className="absolute top-0.5 right-0"
                       variant="ghost"
                       size="icon"
                       onClick={() => setShowSecond(!showSecond)}
-                      aria-label={showSecond ? "Ocultar contraseña" : "Mostrar contraseña"}
+                      aria-label={
+                        showSecond ? "Ocultar contraseña" : "Mostrar contraseña"
+                      }
                     >
                       {showSecond ? <EyeOffIcon /> : <EyeIcon />}
                     </Button>
@@ -206,6 +224,15 @@ export const RegisterForm = () => {
             )}
           />
         </div>
+
+        {process.env.NODE_ENV === "production" && (
+          <div className="mx-auto max-w-max">
+            <HCaptcha
+              sitekey={clientEnv.NEXT_PUBLIC_HCAPTCHA_SITE_KEY}
+              onVerify={setToken}
+            />
+          </div>
+        )}
 
         <div className="flex items-center justify-between">
           <Button asChild variant="secondary">
