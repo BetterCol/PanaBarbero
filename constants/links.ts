@@ -54,3 +54,10 @@ export const PRIVATE_LINKS = {
 
 export type PrivateLink =
   (typeof PRIVATE_LINKS)[keyof typeof PRIVATE_LINKS][number];
+
+export const AUTH_LINKS = [
+  "/login",
+  "/register",
+  "/forgot-password",
+  "/reset-password",
+];

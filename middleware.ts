@@ -2,7 +2,7 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
 import { auth } from "@/lib/auth";
-import { PRIVATE_LINKS } from "./constants/links";
+import { AUTH_LINKS, PRIVATE_LINKS, REDIRECT_LINKS } from "./constants/links";
 import type { UserRole } from "./constants/roles";
 
 async function middleware(request: Request) {
@@ -10,18 +10,21 @@ async function middleware(request: Request) {
     headers: await headers(),
   });
 
-  console.log(session);
-
   // @ts-expect-error
   const userRole = session?.user.role as UserRole;
 
+  const url = new URL(request.url);
   const currentUrl = new URL(request.url).pathname;
+
+  if (session && AUTH_LINKS.includes(currentUrl)) {
+    return NextResponse.redirect(new URL(REDIRECT_LINKS[userRole], url));
+  }
 
   if (
     !session &&
     PRIVATE_LINKS[userRole]?.some((link) => currentUrl.startsWith(link))
   ) {
-    return NextResponse.redirect(new URL("/login", request.url));
+    return NextResponse.redirect(new URL("/login", url));
   }
 
   return NextResponse.next();
