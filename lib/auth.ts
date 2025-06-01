@@ -34,9 +34,6 @@ export const auth = betterAuth({
     enabled: true,
     requireEmailVerification: false,
   },
-  session: {
-    storeSessionInDatabase: true,
-  },
   secondaryStorage: {
     delete: deleteCache,
     get: getCache,
@@ -58,10 +55,13 @@ export const auth = betterAuth({
   emailVerification: {
     sendOnSignUp: false,
   },
+  advanced: {
+    useSecureCookies: process.env.NODE_ENV === "production",
+  },
   trustedOrigins: [
+    serverEnv.BETTER_AUTH_URL,
     `https://${serverEnv.VERCEL_URL}`,
     `https://${serverEnv.VERCEL_PROJECT_PRODUCTION_URL}`,
-    serverEnv.BETTER_AUTH_URL,
     "http://localhost:3000",
   ],
   appName: "PanaBarbero",
@@ -72,6 +72,7 @@ export const auth = betterAuth({
     captcha({
       provider: "hcaptcha",
       secretKey: serverEnv.HCAPTCHA_SECRET_KEY,
+      siteKey: clientEnv.NEXT_PUBLIC_HCAPTCHA_SITE_KEY,
     }),
     oAuthProxy(),
     nextCookies(),

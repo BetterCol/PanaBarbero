@@ -225,14 +225,12 @@ export const RegisterForm = () => {
           />
         </div>
 
-        {process.env.NODE_ENV === "production" && (
-          <div className="mx-auto max-w-max">
-            <HCaptcha
-              sitekey={clientEnv.NEXT_PUBLIC_HCAPTCHA_SITE_KEY}
-              onVerify={setToken}
-            />
-          </div>
-        )}
+        <div className="mx-auto max-w-max">
+          <HCaptcha
+            sitekey={clientEnv.NEXT_PUBLIC_HCAPTCHA_SITE_KEY}
+            onVerify={setToken}
+          />
+        </div>
 
         <div className="flex items-center justify-between">
           <Button asChild variant="secondary">

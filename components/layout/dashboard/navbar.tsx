@@ -19,12 +19,10 @@ export const DesktopNavbar = () => {
 
   const { data } = useSession();
 
-  console.log(data);
-
   const links =
     DASHBOARD_LINKS[
       // @ts-expect-error
-      (data?.user?.role as keyof typeof DASHBOARD_LINKS) ?? "barber"
+      (data?.user?.role as keyof typeof DASHBOARD_LINKS) ?? "user"
     ];
 
   return (
@@ -55,7 +53,7 @@ export const MobileNavbar = () => {
   const links =
     DASHBOARD_LINKS[
       // @ts-expect-error
-      (data?.user?.role as keyof typeof DASHBOARD_LINKS) ?? "barber"
+      (data?.user?.role as keyof typeof DASHBOARD_LINKS) ?? "user"
     ];
 
   return (

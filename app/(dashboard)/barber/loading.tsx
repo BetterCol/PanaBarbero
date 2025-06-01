@@ -6,7 +6,7 @@ const Loading = () => {
     <div>
       <Skeleton className="mb-2 h-10 w-96" />
       <Skeleton className="mb-6 h-4 w-72" />
-      <div className="flex min-h-96 w-full items-center justify-center rounded-xl bg-muted">
+      <div className="flex min-h-96 w-full animate-pulse items-center justify-center rounded-xl bg-accent">
         <Paragraph muted center>
           Cargando...
         </Paragraph>

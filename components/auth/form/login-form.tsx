@@ -166,14 +166,13 @@ export const LoginForm = () => {
           )}
         />
 
-        {process.env.NODE_ENV === "production" && (
-          <div className="mx-auto max-w-max">
-            <HCaptcha
-              sitekey={clientEnv.NEXT_PUBLIC_HCAPTCHA_SITE_KEY}
-              onVerify={setToken}
-            />
-          </div>
-        )}
+        <div className="mx-auto max-w-max">
+          <HCaptcha
+            sitekey={clientEnv.NEXT_PUBLIC_HCAPTCHA_SITE_KEY}
+            onVerify={setToken}
+            size="invisible"
+          />
+        </div>
 
         <div className="flex flex-col-reverse items-start justify-between gap-6 sm:flex-row sm:items-center">
           <Button isLoading={form.formState.isSubmitting} fullWidth>

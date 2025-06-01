@@ -15,6 +15,12 @@ export const DASHBOARD_LINKS = {
     { href: "/barber/my-barbershop", label: "Barberia", icon: Store },
     { href: "/barber/settings", label: "Ajustes", icon: Settings },
   ],
+  user: [
+    { href: "/dashboard", label: "Inicio", icon: Home },
+    { href: "/dashboard/appointments", label: "Reservas", icon: Calendar },
+    { href: "/dashboard/barbers", label: "Barberos", icon: Search },
+    { href: "/dashboard/settings", label: "Ajustes", icon: Settings },
+  ],
 };
 
 export const APP_LINKS = [

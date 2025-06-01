@@ -3,14 +3,13 @@
 import Link from "next/link";
 
 import { ThemeToggle } from "@/components/theme-toggle";
-import { CommandDialog } from "./command-dialog";
 import { DesktopNavbar, MobileNavbar } from "./navbar";
 import { UserDropdown } from "./user-dropdown";
 
 export const DashboardHeader = () => {
   return (
     <>
-      <header className="flex h-15 w-full items-center justify-between bg-accent p-4">
+      <header className="flex h-15 w-full items-center justify-between bg-card p-4">
         <div className="mx-auto flex w-full max-w-[100rem] items-center justify-between">
           <Link
             href="/"
@@ -18,7 +17,6 @@ export const DashboardHeader = () => {
           >
             PanaBarbero
           </Link>
-          {/* <CommandDialog /> */}
 
           <DesktopNavbar />
 

@@ -9,22 +9,16 @@ import { getBarbershopByUserId } from "@/database/services/barbershops/get";
 import { getCurrentUser } from "@/lib/session";
 
 const BarberDashboard = async () => {
-  // const user = await getCurrentUser();
+  const user = await getCurrentUser();
 
-  // console.log(user);
+  if (!user) {
+    redirect("/login");
+  }
 
-  // if (!user) {
-  //   redirect("/login");
-  // }
-
-  // const barbershop = await getBarbershopByUserId(user.id);
-
-  // if (!barbershop) {
-  //   redirect("/barber/create");
-  // }
+  const barbershop = await getBarbershopByUserId(user.id);
 
   const lastFiveAppointments = await getAppointmentsByBarbershopId(
-    "01JWFWH0PN7WZ5KNYNBJT44JRJ",
+    barbershop?.id ?? "",
     5,
   );
 
