@@ -69,7 +69,9 @@ export async function getBarbershops() {
 
   const barbershops = await db.query.barbershops.findMany();
 
-  await setCache(CACHE_KEYS.BARBERSHOPS, barbershops);
+  if (barbershops.length > 0) {
+    await setCache(CACHE_KEYS.BARBERSHOPS, barbershops);
+  }
 
   return barbershops;
 }

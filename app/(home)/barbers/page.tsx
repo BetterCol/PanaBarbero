@@ -1,20 +1,10 @@
 import { Suspense } from "react";
 
-import Link from "next/link";
-
-import { Button } from "@/components/ui/button";
+import { BarbershopCard } from "@/components/barber/barbershops/barbershop-card";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { getBarbershops } from "@/database/services/barbershops/get";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
 
 const Barbershops = async () => {
-  const user = await auth.api.getSession({
-    headers: await headers(),
-  });
-
-  console.log(user);
-
   const barbershops = await getBarbershops();
 
   return (
@@ -33,20 +23,9 @@ const Barbershops = async () => {
           </div>
         }
       >
-        <ul>
-          {barbershops.map((barbershop) => (
-            <li
-              key={barbershop.uuid}
-              className="mx-auto w-full max-w-sm border p-4"
-            >
-              <Button asChild variant="link-neutral">
-                <Link href={`/barbers/${barbershop.uuid}`}>
-                  {barbershop.address} - {barbershop.city}
-                </Link>
-              </Button>
-            </li>
-          ))}
-        </ul>
+        {barbershops.map((barbershop) => (
+          <BarbershopCard key={barbershop.uuid} barbershop={barbershop} />
+        ))}
       </Suspense>
     </div>
   );

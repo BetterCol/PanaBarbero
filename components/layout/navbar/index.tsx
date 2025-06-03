@@ -18,7 +18,7 @@ export const Header = () => {
 
   return (
     <>
-      <header className="flex h-15 w-full items-center justify-between bg-card p-4">
+      <header className="flex h-15 w-full items-center justify-between border-border/20 border-b bg-card p-4">
         <div className="mx-auto flex w-full max-w-[100rem] items-center justify-between">
           <Link
             href="/"

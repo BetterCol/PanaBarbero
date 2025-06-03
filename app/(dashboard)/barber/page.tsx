@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 
 import { HeaderAnalytics } from "@/components/barber/header-analytics";
 import { Heading, Paragraph } from "@/components/ui/typography";
+import { REDIRECT_LINKS } from "@/constants/links";
 import { getAppointmentsByBarbershopId } from "@/database/services/appointments/get";
 import { getBarbershopByUserId } from "@/database/services/barbershops/get";
 import { getCurrentUser } from "@/lib/session";
@@ -13,6 +14,10 @@ const BarberDashboard = async () => {
 
   if (!user) {
     redirect("/login");
+  }
+
+  if (user.role !== "barber") {
+    redirect(REDIRECT_LINKS[user.role]);
   }
 
   const barbershop = await getBarbershopByUserId(user.id);

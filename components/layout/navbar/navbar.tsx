@@ -29,13 +29,13 @@ export const DesktopNavbar = () => {
 
   return (
     <nav className="mx-auto hidden h-14 w-max items-center sm:flex">
-      <div className="mx-auto flex w-full max-w-[100rem] items-center justify-center px-4 sm:justify-start sm:space-x-2 md:space-x-4">
+      <div className="mx-auto flex w-full max-w-[100rem] items-center justify-center px-4 sm:justify-start md:space-x-2 lg:space-x-4">
         {isPending ? (
-          <div className="flex items-center gap-8">
-            <Skeleton className="h-8 w-24" />
-            <Skeleton className="h-8 w-24" />
-            <Skeleton className="h-8 w-24" />
-            <Skeleton className="h-8 w-24" />
+          <div className="flex items-center gap-4 md:gap-8">
+            <Skeleton className="h-8 w-16 md:w-24" />
+            <Skeleton className="h-8 w-16 md:w-24" />
+            <Skeleton className="h-8 w-16 md:w-24" />
+            <Skeleton className="h-8 w-16 md:w-24" />
           </div>
         ) : (
           links.map((link) => (

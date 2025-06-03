@@ -25,6 +25,7 @@ export const DASHBOARD_LINKS = {
 
 export const APP_LINKS = [
   { href: "/barbers", label: "Buscar barberos", icon: Search },
+  { href: "/enroll", label: "Ser barbero", icon: Scissors },
 ];
 
 export const REDIRECT_LINKS = {

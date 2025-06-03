@@ -140,6 +140,14 @@ export const Paragraph: FC<ParagraphProps> = ({
   );
 };
 
-export const Blockquote: FC<HTMLAttributes<HTMLQuoteElement>> = ({ className, ...props }) => {
-  return <blockquote className={cn("text-pretty font-semibold text-xs", className)} {...props} />;
+export const Blockquote: FC<HTMLAttributes<HTMLQuoteElement>> = ({
+  className,
+  ...props
+}) => {
+  return (
+    <blockquote
+      className={cn("text-pretty font-semibold text-xs", className)}
+      {...props}
+    />
+  );
 };

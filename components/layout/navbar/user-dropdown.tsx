@@ -44,7 +44,9 @@ export const UserDropdown = () => {
             />
             <AvatarFallback className="text-xs">{initials}</AvatarFallback>
           </Avatar>
-          <span className="hidden md:inline-flex">{data?.user?.name}</span>
+          <span className="hidden md:inline-flex md:text-xs lg:text-sm">
+            {data?.user?.name}
+          </span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
