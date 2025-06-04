@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 
 import { BarbershopCard } from "@/components/barber/barbershops/barbershop-card";
+import { SearchFilters } from "@/components/barber/search-filters";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { getBarbershops } from "@/database/services/barbershops/get";
 
@@ -23,9 +24,15 @@ const Barbershops = async () => {
           </div>
         }
       >
-        {barbershops.map((barbershop) => (
-          <BarbershopCard key={barbershop.uuid} barbershop={barbershop} />
-        ))}
+        <div className="space-y-4">
+          <SearchFilters />
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {barbershops.map((barbershop) => (
+              <BarbershopCard key={barbershop.uuid} barbershop={barbershop} />
+            ))}
+          </div>
+        </div>
       </Suspense>
     </div>
   );

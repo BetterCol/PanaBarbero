@@ -11,12 +11,11 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardAction,
-  CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Paragraph } from "@/components/ui/typography";
 import type { Barbershop } from "@/database/schemas";
 
 interface BarbershopCardProps {
@@ -33,8 +32,11 @@ export const BarbershopCard: FC<BarbershopCardProps> = ({ barbershop }) => {
 
   return (
     <Card className="mx-auto w-full max-w-sm border border-border/80 shadow-none">
-      <CardHeader className="flex items-center justify-between">
+      <CardHeader>
         <CardTitle>{barbershop.name}</CardTitle>
+        <CardDescription>
+          {barbershop.city}, {barbershop.state}
+        </CardDescription>
         <CardAction>
           <Avatar className="size-10">
             <AvatarImage src={barbershop.logoUrl ?? ""} alt={barbershop.name} />
@@ -42,11 +44,6 @@ export const BarbershopCard: FC<BarbershopCardProps> = ({ barbershop }) => {
           </Avatar>
         </CardAction>
       </CardHeader>
-      <CardContent>
-        <Paragraph muted>
-          {barbershop.city}, {barbershop.state}
-        </Paragraph>
-      </CardContent>
       <CardFooter>
         <Button asChild fullWidth>
           <Link href={`/barbers/${barbershop.uuid}`}>
