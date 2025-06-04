@@ -4,7 +4,6 @@ import {
   Home,
   Scissors,
   Search,
-  Settings,
   Sparkles,
   Store,
 } from "lucide-react";
@@ -19,10 +18,9 @@ export const DASHBOARD_LINKS = {
   ],
   user: [
     { href: "/dashboard", label: "Inicio", icon: Home },
+    { href: "/dashboard/appointments", label: "Mis reservas", icon: Calendar },
     { href: "/barbers", label: "Buscar barberos", icon: Search },
     { href: "/enroll", label: "Ser barbero", icon: Scissors },
-    { href: "/dashboard/appointments", label: "Mis reservas", icon: Calendar },
-    { href: "/settings", label: "Ajustes", icon: Settings },
   ],
 };
 

@@ -18,7 +18,6 @@ const geistMono = Geist_Mono({
 
 export const metadata = generateSEO({
   title: "PanaBarbero",
-  description: "Encuentra tu barbero ideal y agenda tu cita fácilmente.",
 });
 
 export default function RootLayout({

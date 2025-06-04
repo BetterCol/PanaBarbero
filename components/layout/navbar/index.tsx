@@ -22,7 +22,7 @@ export const Header = () => {
         <div className="mx-auto flex w-full max-w-[100rem] items-center justify-between">
           <Link
             href="/"
-            className="text-balance rounded-md border bg-card px-3 py-1 font-semibold text-xl tracking-tighter"
+            className="text-balance font-semibold text-2xl tracking-tighter"
           >
             PanaBarbero
           </Link>

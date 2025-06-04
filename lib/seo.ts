@@ -1,16 +1,21 @@
 import type { Metadata } from "next";
 
-export const generateSEO = (data: {
+export const generateSEO = (metadata: {
   title?: string;
   description?: string;
 }): Metadata => {
   const APP_NAME = "PanaBarbero";
   const APP_DESCRIPTION =
-    "Encuentra y reserva servicios de barbería en tu área. Conoce a los mejores barberos y descubre sus servicios.";
-  const APP_URL = "https://panabarbero.com";
+    "La solucion a gestionar barberias y reservas de clientes.";
+
+  const APP_URL =
+    process.env.NODE_ENV === "production"
+      ? "https://panabarbero.com"
+      : "http://localhost:3000";
+
   const DEFAULT_TITLE = "Encuentra el mejor barbero para ti";
 
-  const { title, description } = data;
+  const { title, description } = metadata;
 
   return {
     title: {
@@ -24,21 +29,9 @@ export const generateSEO = (data: {
       "barbero",
       "servicios de barbería",
       "reserva de barbería",
-      "corte de cabello",
-      "afeitado",
-      "peluquería",
-      "estilo de cabello",
       "barbería cerca de mí",
-      "barbería en línea",
-      "barbería local",
       "barbería profesional",
       "barbería confiable",
-      "barbería recomendada",
-      "barbería con reseñas",
-      "barbería con citas",
-      "barbería con servicios",
-      "barbería con precios",
-      "barbería con promociones",
     ],
     authors: [
       {
@@ -53,9 +46,7 @@ export const generateSEO = (data: {
       siteName: APP_NAME,
       images: [
         {
-          url: "https://panabarbero.com/og-image.png",
-          width: 1200,
-          height: 630,
+          url: `${APP_URL}/og.png`,
           alt: `${APP_NAME} - ${title ? title : DEFAULT_TITLE}`,
         },
       ],
@@ -66,13 +57,12 @@ export const generateSEO = (data: {
       card: "summary_large_image",
       title: `${APP_NAME} - ${title ? title : DEFAULT_TITLE}`,
       description: APP_DESCRIPTION,
-      images: ["https://panabarbero.com/og-image.png"],
+      images: [`${APP_URL}/og.png`],
     },
     icons: {
       icon: "/favicon.ico",
       shortcut: "/favicon-16x16.png",
       apple: "/apple-touch-icon.png",
     },
-    themeColor: "#ffffff",
   };
 };

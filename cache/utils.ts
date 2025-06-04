@@ -15,7 +15,7 @@ export const getCache = async <T>(key: string) => {
 
 export const setCache = async (key: string, value: unknown, ttl?: number) => {
   await client.set(key, JSON.stringify(value), {
-    ex: ttl ?? 60 * 60,
+    ex: ttl ? ttl : 60 * 5,
   });
 };
 

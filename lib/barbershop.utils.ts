@@ -9,3 +9,12 @@ export function getAvailableDays(availability: Barbershop["availability"]) {
     close: times.close,
   }));
 }
+
+export function getSocialMedia(socialMedia: Barbershop["socialMedia"]) {
+  const entries = Object.entries(socialMedia!);
+
+  return entries.map(([media, link]) => ({
+    media,
+    link,
+  }));
+}
