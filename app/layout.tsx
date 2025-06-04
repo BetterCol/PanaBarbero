@@ -1,5 +1,6 @@
 import "./globals.css";
 
+import type { Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import { Toaster } from "@/components/ui/sonner";
@@ -19,6 +20,20 @@ const geistMono = Geist_Mono({
 export const metadata = generateSEO({
   title: "PanaBarbero",
 });
+
+export const viewport: Viewport = {
+  themeColor: [
+    {
+      media: "(prefers-color-scheme: dark)",
+      color: "#09090B",
+    },
+    {
+      media: "(prefers-color-scheme: light)",
+      color: "#2B7FFF",
+    },
+  ],
+  colorScheme: "light dark",
+};
 
 export default function RootLayout({
   children,
