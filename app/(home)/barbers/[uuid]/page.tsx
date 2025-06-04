@@ -2,6 +2,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { getBarbershopByUuid } from "@/database/services/barbershops/get";
+import { getAvailableDays } from "@/lib/appointments";
+import { price } from "@/lib/utils";
 
 type BarberParams = {
   uuid: string;
@@ -16,12 +18,28 @@ const Barber = async ({
 
   const barbershop = await getBarbershopByUuid(uuid);
 
-  const initials = barbershop?.name
+  const initials = barbershop
     ? barbershop.name
         .split(" ")
         .map((name) => name.charAt(0).toUpperCase())
         .join("")
     : "N/A";
+
+  const availableDays = getAvailableDays(barbershop?.availability!);
+
+  const translated = {
+    monday: "Lunes",
+    tuesday: "Martes",
+    wednesday: "Miércoles",
+    thursday: "Jueves",
+    friday: "Viernes",
+    saturday: "Sábado",
+    sunday: "Domingo",
+  };
+
+  for (const day of availableDays) {
+    day.day = translated[day.day as keyof typeof translated] ?? day.day;
+  }
 
   return (
     <div className="w-full p-4">
@@ -44,11 +62,31 @@ const Barber = async ({
         </header>
         <Separator className="my-4" />
 
-        <Heading as="h2">Servicios ofrecidos</Heading>
-        <ul className="list-disc pl-6">
+        <Heading as="h2" className="mb-4">
+          Servicios ofrecidos
+        </Heading>
+
+        <ul className="list-disc pl-5">
           {barbershop?.services.map((service) => (
-            <li key={service.id} className="mb-2">
-              {service.name} - ${service.price.toFixed(2)}
+            <li key={service.uuid} className="space-y-2">
+              <Paragraph variant="body">{service.name}</Paragraph>
+              <Paragraph>{price(service.price)}</Paragraph>
+            </li>
+          ))}
+        </ul>
+
+        <Separator className="my-4" />
+
+        <Heading as="h2" className="mb-4">
+          Horarios disponibles
+        </Heading>
+        <ul className="list-disc pl-5">
+          {availableDays.map((day) => (
+            <li key={day.day} className="space-y-2">
+              <Paragraph variant="body">
+                {day.day.charAt(0).toUpperCase() + day.day.slice(1)}: {day.open}{" "}
+                - {day.close}
+              </Paragraph>
             </li>
           ))}
         </ul>

@@ -12,7 +12,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { USER_DROPDOWN_LINKS } from "@/constants/links";
 import { signOut, useSession } from "@/lib/auth-client";
+import Link from "next/link";
 
 export const UserDropdown = () => {
   const { push } = useRouter();
@@ -56,11 +58,15 @@ export const UserDropdown = () => {
         <DropdownMenuLabel className="hidden md:inline-flex">
           Mi cuenta
         </DropdownMenuLabel>
+
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Profile</DropdownMenuItem>
-        <DropdownMenuItem>Billing</DropdownMenuItem>
-        <DropdownMenuItem>Team</DropdownMenuItem>
-        <DropdownMenuItem>Subscription</DropdownMenuItem>
+
+        {USER_DROPDOWN_LINKS.map((link) => (
+          <DropdownMenuItem key={link.href}>
+            <Link href={link.href}>{link.label}</Link>
+          </DropdownMenuItem>
+        ))}
+
         {data?.user && (
           <DropdownMenuItem>
             <Button

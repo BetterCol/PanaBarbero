@@ -1,9 +1,11 @@
 import {
   Calendar,
+  DollarSign,
   Home,
   Scissors,
   Search,
   Settings,
+  Sparkles,
   Store,
 } from "lucide-react";
 
@@ -13,19 +15,26 @@ export const DASHBOARD_LINKS = {
     { href: "/barber/appointments", label: "Reservas", icon: Calendar },
     { href: "/barber/services", label: "Servicios", icon: Scissors },
     { href: "/barber/my-barbershop", label: "Barberia", icon: Store },
-    { href: "/barber/settings", label: "Ajustes", icon: Settings },
+    { href: "/barber/plan", label: "Plan", icon: Sparkles },
   ],
   user: [
     { href: "/dashboard", label: "Inicio", icon: Home },
-    { href: "/dashboard/appointments", label: "Reservas", icon: Calendar },
-    { href: "/dashboard/barbers", label: "Barberos", icon: Search },
-    { href: "/dashboard/settings", label: "Ajustes", icon: Settings },
+    { href: "/barbers", label: "Buscar barberos", icon: Search },
+    { href: "/enroll", label: "Ser barbero", icon: Scissors },
+    { href: "/dashboard/appointments", label: "Mis reservas", icon: Calendar },
+    { href: "/settings", label: "Ajustes", icon: Settings },
   ],
 };
 
 export const APP_LINKS = [
   { href: "/barbers", label: "Buscar barberos", icon: Search },
   { href: "/enroll", label: "Ser barbero", icon: Scissors },
+  { href: "/pricing", label: "Precios", icon: DollarSign },
+];
+
+export const USER_DROPDOWN_LINKS = [
+  { href: "/profile", label: "Perfil" },
+  { href: "/settings", label: "Ajustes" },
 ];
 
 export const REDIRECT_LINKS = {

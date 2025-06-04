@@ -120,6 +120,12 @@ export const barbershops = pgTable(
 
 export type Barbershop = typeof barbershops.$inferSelect;
 export type BarbershopInsert = typeof barbershops.$inferInsert;
+export type BarbershopWithRelations = Barbershop & {
+  owner: Pick<authSchemas.User, "id" | "name">;
+  barbers: Pick<Barbershop, "id" | "name">[];
+  services: Pick<Service, "id" | "name" | "price" | "duration" | "uuid">[];
+  appointments: Pick<Appointment, "id" | "appointmentDate">[];
+};
 
 export const services = pgTable(
   "services",

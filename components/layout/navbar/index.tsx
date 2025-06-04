@@ -18,7 +18,7 @@ export const Header = () => {
 
   return (
     <>
-      <header className="flex h-15 w-full items-center justify-between border-border/20 border-b bg-card p-4">
+      <header className="flex h-15 w-full items-center justify-between border-border/50 border-b bg-card p-4">
         <div className="mx-auto flex w-full max-w-[100rem] items-center justify-between">
           <Link
             href="/"
@@ -43,7 +43,7 @@ export const Header = () => {
                 <Button asChild size={isMobile ? "icon" : "default"}>
                   <Link href="/login">
                     <User />
-                    <span className="hidden md:inline-flex">
+                    <span className="hidden lg:inline-flex">
                       Iniciar sesión
                     </span>
                   </Link>
@@ -55,7 +55,7 @@ export const Header = () => {
                 >
                   <Link href="/register">
                     <UserPlus />
-                    <span className="hidden md:inline-flex">Registrarse</span>
+                    <span className="hidden lg:inline-flex">Registrarse</span>
                   </Link>
                 </Button>
               </div>
