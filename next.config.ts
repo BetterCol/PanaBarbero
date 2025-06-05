@@ -17,7 +17,6 @@ const nextConfig: NextConfig = {
     reactCompiler: true,
     staleTimes: {
       dynamic: 60,
-      static: 300,
     },
   },
 };

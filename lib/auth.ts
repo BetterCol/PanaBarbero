@@ -1,3 +1,4 @@
+import { checkout, polar, portal, webhooks } from "@polar-sh/better-auth";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
@@ -5,11 +6,13 @@ import { captcha, oAuthProxy, oneTap, twoFactor } from "better-auth/plugins";
 import { passkey } from "better-auth/plugins/passkey";
 
 import { deleteCache, getCache, setCache } from "@/cache/utils";
-import { ROLES, type UserRole } from "@/constants/roles";
+import type { UserRole } from "@/constants/roles";
+import { ROLES } from "@/constants/roles";
 import { db } from "@/database/config";
 import * as schema from "@/database/schemas";
 import { clientEnv } from "@/env/client";
 import { serverEnv } from "@/env/server";
+import { client, getAppProducts } from "./polar";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -75,6 +78,21 @@ export const auth = betterAuth({
       siteKey: clientEnv.NEXT_PUBLIC_HCAPTCHA_SITE_KEY,
     }),
     oAuthProxy(),
+    polar({
+      client,
+      createCustomerOnSignUp: true,
+      use: [
+        checkout({
+          products: await getAppProducts(),
+          authenticatedUsersOnly: true,
+          successUrl: "/success?checkout_id={CHECKOUT_ID}",
+        }),
+        portal(),
+        webhooks({
+          secret: serverEnv.POLAR_SECRET,
+        }),
+      ],
+    }),
     nextCookies(),
   ],
 });

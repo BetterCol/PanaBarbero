@@ -13,3 +13,11 @@ export function price(price: number) {
     maximumFractionDigits: 0,
   }).format(price);
 }
+
+export function priceDollar(price: number) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: price === 0 ? 0 : 2,
+  }).format(price);
+}

@@ -9,6 +9,8 @@ export const serverEnv = createEnv({
     BETTER_AUTH_SECRET: string(),
     GOOGLE_CLIENT_SECRET: string(),
     HCAPTCHA_SECRET_KEY: string(),
+    POLAR_ACCESS_TOKEN: string(),
+    POLAR_SECRET: string(),
   },
   experimental__runtimeEnv: process.env,
   extends: [upstashRedis(), vercel()],

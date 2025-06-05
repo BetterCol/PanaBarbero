@@ -1,3 +1,4 @@
+import { polarClient } from "@polar-sh/better-auth";
 import {
   inferAdditionalFields,
   oneTapClient,
@@ -17,6 +18,7 @@ export const authClient = createAuthClient({
     }),
     passkeyClient(),
     twoFactorClient(),
+    polarClient(),
     inferAdditionalFields<typeof auth>(),
   ],
   fetchOptions: {
