@@ -50,7 +50,7 @@ const Enroll = async () => {
           </div>
         </section>
 
-        <Heading as="h2" className="mt-14 max-w-prose tracking-tight" center>
+        <Heading className="mt-14 max-w-prose" center>
           Trabaja sin costo en el 99% de los casos y solo pagas cuando realmente
           lo requieras
         </Heading>

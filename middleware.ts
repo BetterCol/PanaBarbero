@@ -1,22 +1,28 @@
+import { headers } from "next/headers";
+import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-import { AUTH_LINKS, PRIVATE_LINKS, REDIRECT_LINKS } from "@/constants/links";
-import { getCurrentUser } from "@/lib/session";
+import { auth } from "@/lib/auth";
+import { AUTH_LINKS, PRIVATE_LINKS, REDIRECT_LINKS } from "./constants/links";
+import type { UserRole } from "./constants/roles";
 
-async function middleware(request: Request) {
-  const user = await getCurrentUser();
+export default async function middleware(request: NextRequest) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
-  const userRole = user?.role!;
+  // @ts-expect-error
+  const userRole = session?.user.role as UserRole;
 
   const url = new URL(request.url);
   const currentUrl = new URL(request.url).pathname;
 
-  if (user && AUTH_LINKS.includes(currentUrl)) {
+  if (session && AUTH_LINKS.includes(currentUrl)) {
     return NextResponse.redirect(new URL(REDIRECT_LINKS[userRole], url));
   }
 
   if (
-    !user &&
+    !session &&
     PRIVATE_LINKS[userRole]?.some((link) => currentUrl.startsWith(link))
   ) {
     return NextResponse.redirect(new URL("/login", url));
@@ -24,8 +30,6 @@ async function middleware(request: Request) {
 
   return NextResponse.next();
 }
-
-export default middleware;
 
 export const config = {
   matcher: [

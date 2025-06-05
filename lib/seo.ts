@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 
+import { serverEnv } from "@/env/server";
+
 export const APP_NAME = "PanaBarbero";
 export const APP_DESCRIPTION =
   "La solucion a gestionar barberias y reservas de clientes.";
 
 export const APP_URL =
   process.env.NODE_ENV === "production"
-    ? "https://panabarbero.com"
+    ? `https://${serverEnv.VERCEL_PROJECT_PRODUCTION_URL}`
     : "http://localhost:3000";
 
 export const DEFAULT_TITLE = "Encuentra el mejor barbero para ti";
@@ -33,6 +35,10 @@ export const generateSEO = (metadata: {
       "barbería profesional",
       "barbería confiable",
     ],
+    metadataBase: new URL(APP_URL),
+    alternates: {
+      canonical: "/",
+    },
     authors: [
       {
         name: "Andrés Rodríguez",
@@ -44,25 +50,18 @@ export const generateSEO = (metadata: {
       description: description ? description : APP_DESCRIPTION,
       url: APP_URL,
       siteName: APP_NAME,
-      images: [
-        {
-          url: "/og.webp",
-          alt: `${APP_NAME} - ${title ? title : DEFAULT_TITLE}`,
-        },
-      ],
+      images: {
+        url: "/og.webp",
+        alt: `${APP_NAME} - ${title ? title : DEFAULT_TITLE}`,
+        width: 1200,
+        height: 630,
+      },
+
       locale: "es_CO",
       type: "website",
     },
     twitter: {
-      card: "summary_large_image",
-      title: `${APP_NAME} - ${title ? title : DEFAULT_TITLE}`,
-      description: APP_DESCRIPTION,
-      images: [
-        {
-          url: "/og.webp",
-          alt: `${APP_NAME} - ${title ? title : DEFAULT_TITLE}`,
-        },
-      ],
+      creator: "@pulgueta_",
     },
     icons: {
       icon: "/favicon.ico",

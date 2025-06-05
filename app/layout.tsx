@@ -17,9 +17,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata = generateSEO({
-  title: "PanaBarbero",
-});
+export const metadata = generateSEO({});
 
 export const viewport: Viewport = {
   themeColor: [
