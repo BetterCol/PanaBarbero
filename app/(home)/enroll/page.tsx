@@ -11,9 +11,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { getProductsFromPolar } from "@/lib/polar";
-import { priceDollar } from "@/lib/utils";
+import { cn, priceDollar } from "@/lib/utils";
+import { Suspense } from "react";
 
 const Enroll = async () => {
   const products = await getProductsFromPolar();
@@ -48,49 +50,63 @@ const Enroll = async () => {
           </div>
         </section>
 
-        <section className="w-full">
-          {products.map((product) => (
-            <Card key={product.id} className="mb-4 max-w-xs">
-              <CardHeader>
-                <CardTitle>{product.name}</CardTitle>
-                <CardDescription>{product.description}</CardDescription>
-                {product.prices.map((price) => (
-                  <CardAction key={price.id} className="font-medium">
-                    {price.amountType === "fixed"
-                      ? priceDollar(price.priceAmount / 100)
-                      : price.amountType === "free" && priceDollar(0)}
-                  </CardAction>
-                ))}
-              </CardHeader>
-              <CardFooter>
-                <Button fullWidth>Empezar ahora</Button>
-              </CardFooter>
-            </Card>
-          ))}
+        <Heading as="h2" className="mt-14 max-w-prose tracking-tight" center>
+          Trabaja sin costo en el 99% de los casos y solo pagas cuando realmente
+          lo requieras
+        </Heading>
+        <Suspense
+          fallback={
+            <div className="w-full">
+              <Skeleton className="h-16 max-w-xs" />
+            </div>
+          }
+        >
+          <section className="mx-auto mt-16 flex min-h-96 w-full max-w-4xl flex-col items-center justify-center gap-2 lg:mt-0 lg:flex-row">
+            {products.map((product) => {
+              const isPaid = product.prices.some(
+                (price) => price.amountType === "fixed",
+              );
 
-          <Card className="max-w-xs">
-            <CardHeader>
-              <CardTitle>Gratis</CardTitle>
-              <CardDescription>
-                Puedes inscribirte y empezar a recibir clientes sin costo
-                alguno.
-              </CardDescription>
-              <CardAction>$0</CardAction>
-            </CardHeader>
-            <CardContent>
-              <Paragraph className="mb-2">
-                No hay cargos ocultos ni comisiones por reserva. Puedes
-                gestionar tus citas y clientes de forma gratuita.
-              </Paragraph>
-              <Paragraph>
-                Gestiona tu barberia y empieza a recibir clientes hoy mismo.
-              </Paragraph>
-            </CardContent>
-            <CardFooter>
-              <Button fullWidth>Empezar ahora</Button>
-            </CardFooter>
-          </Card>
-        </section>
+              return (
+                <Card
+                  key={product.id}
+                  className={cn(
+                    "hover:-translate-y-8 mx-auto mb-4 max-h-full w-full max-w-sm border-2 border-border/50 transition-transform duration-500 ease-in-out sm:min-w-sm",
+                    {
+                      "border-2 border-primary": isPaid,
+                    },
+                  )}
+                >
+                  <CardHeader>
+                    <CardTitle className="font-bold text-3xl">
+                      {product.name}
+                    </CardTitle>
+                    {product.prices.map((price) => (
+                      <CardAction
+                        key={price.id}
+                        className="font-semibold text-xl"
+                      >
+                        {price.amountType === "fixed"
+                          ? `${priceDollar(price.priceAmount / 100)}/mes`
+                          : price.amountType === "free" && priceDollar(0)}
+                      </CardAction>
+                    ))}
+                  </CardHeader>
+                  <CardContent>
+                    <Paragraph variant="sub1" muted>
+                      {product.description}
+                    </Paragraph>
+                  </CardContent>
+                  <CardFooter>
+                    <Button fullWidth>
+                      {isPaid ? "Actualizar" : "Empezar gratis"}
+                    </Button>
+                  </CardFooter>
+                </Card>
+              );
+            })}
+          </section>
+        </Suspense>
       </div>
     </div>
   );

@@ -2,9 +2,12 @@ import { Polar } from "@polar-sh/sdk";
 
 import { serverEnv } from "@/env/server";
 
+const isProductionEnv =
+  process.env.NODE_ENV === "production" || !!process.env.CI;
+
 export const client = new Polar({
   accessToken: serverEnv.POLAR_ACCESS_TOKEN,
-  server: process.env.NODE_ENV === "production" ? "production" : "sandbox",
+  server: isProductionEnv ? "production" : "sandbox",
 });
 
 export async function getProductsFromPolar() {

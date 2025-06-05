@@ -36,7 +36,7 @@ export const UserDropdown = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          className="flex w-8 cursor-pointer items-center md:w-auto"
+          className="flex w-8 cursor-pointer items-center lg:w-auto"
           variant="outline"
         >
           <Avatar className="size-6">
@@ -46,16 +46,16 @@ export const UserDropdown = () => {
             />
             <AvatarFallback className="text-xs">{initials}</AvatarFallback>
           </Avatar>
-          <span className="hidden md:inline-flex md:text-xs lg:text-sm">
+          <span className="hidden md:text-xs lg:inline-flex lg:text-sm">
             {data?.user?.name}
           </span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuLabel className="md:hidden">
+        <DropdownMenuLabel className="lg:hidden">
           {data?.user?.name}
         </DropdownMenuLabel>
-        <DropdownMenuLabel className="hidden md:inline-flex">
+        <DropdownMenuLabel className="hidden lg:inline-flex">
           Mi cuenta
         </DropdownMenuLabel>
 
