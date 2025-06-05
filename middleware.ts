@@ -1,18 +1,27 @@
-import { headers } from "next/headers";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-import { auth } from "@/lib/auth";
-import { AUTH_LINKS, PRIVATE_LINKS, REDIRECT_LINKS } from "./constants/links";
-import type { UserRole } from "./constants/roles";
+import { betterFetch } from "@better-fetch/fetch";
+
+import { AUTH_LINKS, PRIVATE_LINKS, REDIRECT_LINKS } from "@/constants/links";
+import type { UserRole } from "@/constants/roles";
+import type { auth } from "@/lib/auth";
+
+type Session = typeof auth.$Infer.Session;
 
 export default async function middleware(request: NextRequest) {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  const { data: session } = await betterFetch<Session>(
+    "/api/auth/get-session",
+    {
+      baseURL: request.nextUrl.origin,
+      headers: {
+        cookie: request.headers.get("cookie") || "",
+      },
+    },
+  );
 
   // @ts-expect-error
-  const userRole = session?.user.role as UserRole;
+  const userRole = session?.user?.role as UserRole;
 
   const url = new URL(request.url);
   const currentUrl = new URL(request.url).pathname;
@@ -34,6 +43,5 @@ export default async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
-    "/(api|trpc)(.*)",
   ],
 };
