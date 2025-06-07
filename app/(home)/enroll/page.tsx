@@ -1,21 +1,12 @@
+import { Suspense } from "react";
+
 import { Calendar, Scissors } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { ProductList } from "@/components/barber/products-list";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { getProductsFromPolar } from "@/lib/polar";
-import { cn, priceDollar } from "@/lib/utils";
-import { Suspense } from "react";
 
 const Enroll = async () => {
   const products = await getProductsFromPolar();
@@ -50,10 +41,11 @@ const Enroll = async () => {
           </div>
         </section>
 
-        <Heading className="mt-14 max-w-prose" center>
+        <Heading as="h2" className="mt-14" center>
           Trabaja sin costo en el 99% de los casos y solo pagas cuando realmente
           lo requieras
         </Heading>
+
         <Suspense
           fallback={
             <div className="w-full">
@@ -68,41 +60,11 @@ const Enroll = async () => {
               );
 
               return (
-                <Card
+                <ProductList
                   key={product.id}
-                  className={cn(
-                    "hover:-translate-y-8 mx-auto mb-4 max-h-full w-full max-w-sm border-2 border-border/50 transition-transform duration-500 ease-in-out sm:min-w-sm",
-                    {
-                      "border-2 border-primary": isPaid,
-                    },
-                  )}
-                >
-                  <CardHeader>
-                    <CardTitle className="font-bold text-3xl">
-                      {product.name}
-                    </CardTitle>
-                    {product.prices.map((price) => (
-                      <CardAction
-                        key={price.id}
-                        className="font-semibold text-xl"
-                      >
-                        {price.amountType === "fixed"
-                          ? `${priceDollar(price.priceAmount / 100)}/mes`
-                          : price.amountType === "free" && priceDollar(0)}
-                      </CardAction>
-                    ))}
-                  </CardHeader>
-                  <CardContent>
-                    <Paragraph variant="sub1" muted>
-                      {product.description}
-                    </Paragraph>
-                  </CardContent>
-                  <CardFooter>
-                    <Button fullWidth>
-                      {isPaid ? "Actualizar" : "Empezar gratis"}
-                    </Button>
-                  </CardFooter>
-                </Card>
+                  product={product}
+                  isPaid={isPaid}
+                />
               );
             })}
           </section>

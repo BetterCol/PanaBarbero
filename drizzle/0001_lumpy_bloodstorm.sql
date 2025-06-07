@@ -1,0 +1,1 @@
+ALTER TABLE "barbers" ADD COLUMN "product_id" text NOT NULL;

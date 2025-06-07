@@ -1,10 +1,12 @@
 "use client";
 
 import type { FC } from "react";
+import { useEffect } from "react";
 
 import Link from "next/link";
 
 import { ArrowRight, Book, Calendar, DollarSign } from "lucide-react";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -29,9 +31,19 @@ import type { AppointmentWithRelations } from "@/database/schemas";
 
 interface HeaderAnalyticsProps {
   appointments: AppointmentWithRelations[];
+  checkout_id: string;
 }
 
-export const HeaderAnalytics: FC<HeaderAnalyticsProps> = ({ appointments }) => {
+export const HeaderAnalytics: FC<HeaderAnalyticsProps> = ({
+  appointments,
+  checkout_id,
+}) => {
+  useEffect(() => {
+    if (checkout_id) {
+      toast.success(`ID de pago: ${checkout_id}`);
+    }
+  }, [checkout_id]);
+
   return (
     <div className="grid grid-cols-1 place-items-start gap-4 sm:grid-cols-2 md:grid-cols-4">
       <div className="col-span-3 grid w-full gap-4 sm:col-span-2">

@@ -12,7 +12,7 @@ import { db } from "@/database/config";
 import * as schema from "@/database/schemas";
 import { clientEnv } from "@/env/client";
 import { serverEnv } from "@/env/server";
-import { client, getAppProducts } from "./polar";
+import { client, getAppProducts, subscribeCustomer } from "./polar";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -90,6 +90,13 @@ export const auth = betterAuth({
         portal(),
         webhooks({
           secret: serverEnv.POLAR_SECRET,
+          onSubscriptionCreated: async ({ data: payload }) => {
+            await subscribeCustomer(
+              payload.customerId,
+              payload.productId,
+              payload,
+            );
+          },
         }),
       ],
     }),

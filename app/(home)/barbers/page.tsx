@@ -11,10 +11,10 @@ const Barbershops = async () => {
   return (
     <div className="container mx-auto p-4">
       <header className="mb-4 space-y-1">
-        <Heading>Descubre nuestras barberías</Heading>
+        <Heading>Descubre barberías</Heading>
         <Paragraph muted>
-          Aquí puedes encontrar una lista de todas las barberías disponibles.
-          Haz clic en una para ver más detalles y reservar tu cita.
+          Explora las mejores barberías de tu zona y encuentra la que más se
+          ajuste a tus necesidades.
         </Paragraph>
       </header>
       <Suspense
@@ -28,9 +28,15 @@ const Barbershops = async () => {
           <SearchFilters />
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {barbershops.map((barbershop) => (
-              <BarbershopCard key={barbershop.uuid} barbershop={barbershop} />
-            ))}
+            {barbershops.length > 0 ? (
+              barbershops.map((barbershop) => (
+                <BarbershopCard key={barbershop.uuid} barbershop={barbershop} />
+              ))
+            ) : (
+              <div className="col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4">
+                <Paragraph muted>No se encontraron barberías.</Paragraph>
+              </div>
+            )}
           </div>
         </div>
       </Suspense>

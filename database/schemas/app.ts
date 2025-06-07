@@ -88,6 +88,7 @@ export const barbers = pgTable(
     userId: text()
       .notNull()
       .references(() => authSchemas.user.id, { onDelete: "cascade" }),
+    productId: text().notNull(),
     barbershopId: text()
       .notNull()
       .references(() => barbershops.id, { onDelete: "cascade" }),

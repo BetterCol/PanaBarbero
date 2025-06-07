@@ -44,7 +44,7 @@ export const DesktopNavbar = () => {
               variant={pathname === link.href ? "outline" : "ghost"}
               asChild
             >
-              <Link href={link.href}>
+              <Link href={link.href} prefetch>
                 <link.icon className="hidden lg:block" />
                 {link.label}
               </Link>
@@ -85,7 +85,7 @@ export const MobileNavbar = () => {
               })}
               asChild
             >
-              <Link href={link.href}>
+              <Link href={link.href} prefetch>
                 <link.icon />
                 {link.label}
               </Link>

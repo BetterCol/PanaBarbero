@@ -41,7 +41,7 @@ export const Header = () => {
             ) : (
               <div className="flex items-center gap-2">
                 <Button asChild size={isMobile ? "icon" : "default"}>
-                  <Link href="/login">
+                  <Link href="/login" prefetch>
                     <User />
                     <span className="hidden lg:inline-flex">
                       Iniciar sesión
@@ -53,7 +53,7 @@ export const Header = () => {
                   size={isMobile ? "icon" : "default"}
                   variant="outline"
                 >
-                  <Link href="/register">
+                  <Link href="/register" prefetch>
                     <UserPlus />
                     <span className="hidden lg:inline-flex">Registrarse</span>
                   </Link>

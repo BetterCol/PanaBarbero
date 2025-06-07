@@ -8,6 +8,13 @@
       "when": 1748732697686,
       "tag": "0000_famous_earthquake",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1749249839487,
+      "tag": "0001_lumpy_bloodstorm",
+      "breakpoints": true
     }
   ]
 }

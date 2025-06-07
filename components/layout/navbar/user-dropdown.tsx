@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { LogOutIcon } from "lucide-react";
@@ -13,8 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { USER_DROPDOWN_LINKS } from "@/constants/links";
-import { signOut, useSession } from "@/lib/auth-client";
-import Link from "next/link";
+import { checkout, customer, signOut, useSession } from "@/lib/auth-client";
 
 export const UserDropdown = () => {
   const { push } = useRouter();
@@ -60,6 +60,14 @@ export const UserDropdown = () => {
         </DropdownMenuLabel>
 
         <DropdownMenuSeparator />
+
+        <DropdownMenuItem
+          onClick={() => {
+            customer.portal();
+          }}
+        >
+          Suscripcion
+        </DropdownMenuItem>
 
         {USER_DROPDOWN_LINKS.map((link) => (
           <DropdownMenuItem key={link.href}>

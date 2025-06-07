@@ -9,8 +9,16 @@ import { getAppointmentsByBarbershopId } from "@/database/services/appointments/
 import { getBarbershopByUserId } from "@/database/services/barbershops/get";
 import { getCurrentUser } from "@/lib/session";
 
-const BarberDashboard = async () => {
-  const user = await getCurrentUser();
+type BarberParams = {
+  checkout_id: string;
+};
+
+const BarberDashboard = async ({
+  params,
+}: {
+  params: Promise<BarberParams>;
+}) => {
+  const [user, searchParams] = await Promise.all([getCurrentUser(), params]);
 
   if (!user) {
     redirect("/login");
@@ -44,7 +52,10 @@ const BarberDashboard = async () => {
           </div>
         }
       >
-        <HeaderAnalytics appointments={lastFiveAppointments} />
+        <HeaderAnalytics
+          appointments={lastFiveAppointments}
+          checkout_id={searchParams?.checkout_id}
+        />
       </Suspense>
     </div>
   );
